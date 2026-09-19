@@ -23,7 +23,7 @@ Use "dir" to check that you are in the same path as .csproj path.
 One could also right-click on the project (not the solution, the project), e.g. "WPF_APP_NAME", and select "Open in Terminal".
 
 Then run the command:
-  dotnet ef dbcontext scaffold "Server=.\SQLEXPRESS;Database=Single_Stage_MVVM;Integrated Security=True;TrustServerCertificate=True" Microsoft.EntityFrameworkCore.SqlServer --output-dir Entities
+  dotnet ef dbcontext scaffold "Server=.\SQLEXPRESS;Database=AddressDatabase;Integrated Security=True;TrustServerCertificate=True" Microsoft.EntityFrameworkCore.SqlServer --output-dir Entities
 The connection string (the part of the command in quotes) may vary.
 
 To overwrite/update the context, use "-f" at the end of this command, e.g. when the database has been changed or expanded.
