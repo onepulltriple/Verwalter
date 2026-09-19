@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Infrastructure.Persistence.Entities;
 
 namespace Infrastructure
 {
@@ -8,7 +9,7 @@ namespace Infrastructure
         public static IServiceCollection AddInfrastructure(
             this IServiceCollection services)
         {
-            services.AddDbContext<AddressDbContext>(options =>
+            services.AddDbContext<AddressDatabaseContext>(options =>
             {
                 options.UseSqlServer(
                     @"Server=.\SQLEXPRESS;Database=AddressDatabase;Integrated Security=True;TrustServerCertificate=True");
