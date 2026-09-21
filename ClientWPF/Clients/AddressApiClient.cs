@@ -8,12 +8,9 @@ namespace ClientWPF.Clients
     {
         private readonly HttpClient _httpClient;
 
-        public AddressApiClient()
+        public AddressApiClient(HttpClient httpClient)
         {
-            _httpClient = new HttpClient
-            {
-                BaseAddress = new Uri("https://localhost:7171/")
-            };
+            _httpClient = httpClient;
         }
 
         public async Task<AddressDto?> GetByIdAsync(Guid addressId)

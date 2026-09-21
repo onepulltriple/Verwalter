@@ -9,9 +9,9 @@ namespace ClientWPF.ViewModels
 
         public AddressDto? Address { get; private set; }
 
-        public MainViewModel()
+        public MainViewModel(AddressApiClient addressApiClient)
         {
-            _addressApiClient = new AddressApiClient();
+            _addressApiClient = addressApiClient;
         }
 
         public async Task LoadAddressAsync()

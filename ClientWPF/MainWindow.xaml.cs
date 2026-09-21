@@ -22,11 +22,11 @@ namespace ClientWPF
     {
         private readonly MainViewModel _viewModel;
 
-        public MainWindow()
+        public MainWindow(MainViewModel mainViewModel)
         {
             InitializeComponent();
 
-            _viewModel = new MainViewModel();
+            _viewModel = mainViewModel;
             DataContext = _viewModel;
 
             Loaded += MainWindow_Loaded;
