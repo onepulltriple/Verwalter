@@ -1,7 +1,7 @@
 ﻿using Application.Addresses;
-using ClientWPF.Clients;
+using AnwendungWPF.Clients;
 
-namespace ClientWPF.ViewModels
+namespace AnwendungWPF.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {

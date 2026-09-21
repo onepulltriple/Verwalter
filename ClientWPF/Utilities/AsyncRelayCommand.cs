@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
 
-namespace ClientWPF.Infrastructure
+namespace AnwendungWPF.Infrastructure
 {
     public class AsyncRelayCommand : ICommand
     {

@@ -1,6 +1,6 @@
 ﻿using System.Net.Http;
 
-namespace ClientWPF.Services
+namespace AnwendungWPF.Services
 {
     public class ApiService
     {

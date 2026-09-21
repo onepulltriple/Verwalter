@@ -2,11 +2,11 @@
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Http;
 using System.Windows;
-using ClientWPF.Clients;
-using ClientWPF.ViewModels;
+using AnwendungWPF.Clients;
+using AnwendungWPF.ViewModels;
 //using ClientWPF.Windows;
 
-namespace ClientWPF
+namespace AnwendungWPF
 {
     /// <summary>
     /// Interaction logic for App.xaml

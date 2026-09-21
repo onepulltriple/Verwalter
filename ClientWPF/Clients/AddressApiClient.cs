@@ -2,7 +2,7 @@
 using System.Net.Http;
 using System.Net.Http.Json;
 
-namespace ClientWPF.Clients
+namespace AnwendungWPF.Clients
 {
     public class AddressApiClient
     {

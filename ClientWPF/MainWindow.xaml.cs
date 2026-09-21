@@ -1,6 +1,6 @@
 ﻿//using System.Windows;
 
-//namespace ClientWPF
+//namespace AnwendungWPF
 //{
 //    /// <summary>
 //    /// Interaction logic for MainWindow.xaml
@@ -13,10 +13,10 @@
 //        }
 //    }
 //}
-using ClientWPF.ViewModels;
+using AnwendungWPF.ViewModels;
 using System.Windows;
 
-namespace ClientWPF
+namespace AnwendungWPF
 {
     public partial class MainWindow : Window
     {
