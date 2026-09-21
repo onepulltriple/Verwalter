@@ -2,21 +2,24 @@
 using System.Net.Http;
 using System.Net.Http.Json;
 
-namespace ClientWPF.Services
+namespace ClientWPF.Clients
 {
     public class AddressApiClient
     {
         private readonly HttpClient _httpClient;
 
-        public AddressApiClient(HttpClient httpClient)
+        public AddressApiClient()
         {
-            _httpClient = httpClient;
+            _httpClient = new HttpClient
+            {
+                BaseAddress = new Uri("https://localhost:7171/")
+            };
         }
 
         public async Task<AddressDto?> GetByIdAsync(Guid addressId)
         {
             return await _httpClient.GetFromJsonAsync<AddressDto>(
-                $"api/address/{addressId}"
+                $"api/addresses/{addressId}"
                 );
         }
     }

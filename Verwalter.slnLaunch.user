@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "Verwalter: API + WPF",
+    "Projects": [
+      {
+        "Path": "API\\API.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "ClientWPF\\ClientWPF.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]
