@@ -3,7 +3,7 @@ using ClientWPF.Clients;
 
 namespace ClientWPF.ViewModels
 {
-    public class MainViewModel
+    public class MainViewModel : ViewModelBase
     {
         private readonly AddressApiClient _addressApiClient;
 

@@ -1,0 +1,11 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style x:Key="EditorGridStyle"
+           TargetType="Grid"
+           >
+        <!-- Grid has no implicit/default style that can be targeted with {x:Type Grid} -->
+        <Setter Property="Margin"                   Value="20,0,0,0"/>
+    </Style>
+
+</ResourceDictionary>

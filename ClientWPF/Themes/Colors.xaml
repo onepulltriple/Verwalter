@@ -1,0 +1,27 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!--FOREGROUNDS-->
+    <!--for brushes, colors, and visual constants-->
+    <SolidColorBrush x:Key="PrimaryTextBrush"               Color="#FF222222"/>
+    <SolidColorBrush x:Key="WarningTextBrush"               Color="#FFF8C537"/>
+
+    <!--BACKGROUNDS-->
+    <!-- semi-transparent (CC = ~80% opacity) alpha channel doesn't fade the text, just the background -->
+    <SolidColorBrush x:Key="PrimaryPanelBackgroundBrush"    Color="#CCFFFFFF"/>
+    <SolidColorBrush x:Key="PrimaryBorderBrush"             Color="#FF2D2D30"/>
+    <SolidColorBrush x:Key="DefaultBackgroundBrush"         Color="AliceBlue"/>
+
+    <!--INPUTS-->
+    <SolidColorBrush x:Key="InputBorderBrush"               Color="#FFABADB3"/>
+
+    <!--BORDERS-->
+    <SolidColorBrush x:Key="PrimaryButtonBorderBrush"       Color="#FF707070"/>
+    <SolidColorBrush x:Key="ButtonIsDisabledBorderBrush"    Color="#FFE5E5E5"/>
+
+    <!--BUTTONS-->
+    <SolidColorBrush x:Key="ButtonIsMouseOverBackground"    Color="#FFD6EAF8"/>
+    <SolidColorBrush x:Key="ButtonIsPressedBackground"      Color="#FFA9CCE3"/>
+    <SolidColorBrush x:Key="ButtonIsDisabledBackground"     Color="#FFF4F4F4"/>
+
+</ResourceDictionary>
