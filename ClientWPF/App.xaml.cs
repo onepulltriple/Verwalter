@@ -1,4 +1,5 @@
 ﻿using AnwendungWPF.Clients;
+using AnwendungWPF.Configuration;
 using AnwendungWPF.ViewModels;
 using AnwendungWPF.Windows;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,17 +18,15 @@ namespace AnwendungWPF
             base.OnStartup(e);
 
             _host = Host.CreateDefaultBuilder()
-                .ConfigureServices((_, services) =>
+                .ConfigureServices((context, services) =>
                 {
                     // API Clients
-                    services.AddHttpClient<IAddressApiClient, AddressApiClient>(client =>
-                    {
-                        client.BaseAddress = new Uri("https://localhost:7171/");
-                    });
-                    services.AddHttpClient<ICountryApiClient, CountryApiClient>(client =>
-                    {
-                        client.BaseAddress = new Uri("https://localhost:7171/");
-                    });
+                    services.Configure<ApiSettings>(
+                        context.Configuration.GetSection("ApiSettings")
+                    );
+
+                    services.AddHttpClient<IAddressApiClient, AddressApiClient>();
+                    services.AddHttpClient<ICountryApiClient, CountryApiClient>();
                     
                     // ViewModels and Windows
                     services.AddTransient<MainViewModel>();

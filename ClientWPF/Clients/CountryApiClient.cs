@@ -1,5 +1,7 @@
-﻿using AnwendungWPF.Models;
+﻿using AnwendungWPF.Configuration;
+using AnwendungWPF.Models;
 using APIContracts.Countries;
+using Microsoft.Extensions.Options;
 using System.Net.Http;
 using System.Net.Http.Json;
 
@@ -9,9 +11,11 @@ namespace AnwendungWPF.Clients
     {
         private readonly HttpClient _httpClient;
 
-        public CountryApiClient(HttpClient httpClient)
+        public CountryApiClient(HttpClient httpClient, IOptions<ApiSettings> apiSettings)
         {
             _httpClient = httpClient;
+            _httpClient.BaseAddress =
+                new Uri(apiSettings.Value.BaseUrl);
         }
 
         public async Task<IReadOnlyList<CountryModel>> GetAllAsync()
