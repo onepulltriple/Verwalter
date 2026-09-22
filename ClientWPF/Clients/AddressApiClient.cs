@@ -1,10 +1,11 @@
-﻿using Application.Addresses;
+﻿using AnwendungWPF.Models;
+using APIContracts.Addresses;
 using System.Net.Http;
 using System.Net.Http.Json;
 
 namespace AnwendungWPF.Clients
 {
-    public class AddressApiClient
+    public sealed class AddressApiClient : IAddressApiClient
     {
         private readonly HttpClient _httpClient;
 
@@ -13,44 +14,26 @@ namespace AnwendungWPF.Clients
             _httpClient = httpClient;
         }
 
-        public async Task<AddressDto?> GetByIdAsync(Guid addressId)
+        public async Task<AddressModel?> GetByIdAsync(Guid addressId)
         {
-            return await _httpClient.GetFromJsonAsync<AddressDto>(
-                $"api/addresses/{addressId}"
-                );
+            var response = await _httpClient.GetFromJsonAsync<AddressResponse>(
+                $"api/addresses/{addressId}");
+
+            return response is null
+                ? null
+                : Map(response);
         }
 
-        public async Task<IReadOnlyList<AddressDto>> GetAllAsync()
+        public async Task<IReadOnlyList<AddressModel>> GetAllAsync()
         {
-            return await _httpClient.GetFromJsonAsync<List<AddressDto>>(
+            var responses = await _httpClient.GetFromJsonAsync<List<AddressResponse>>(
                 "api/addresses")
                 ?? [];
+
+            return responses
+                .Select(Map)
+                .ToList();
         }
-
-        //public async Task<AddressDto> CreateAsync(
-        //    CreateAddressRequest request)
-        //{
-        //    var response = await _httpClient.PostAsJsonAsync(
-        //        "api/addresses",
-        //        request);
-
-        //    response.EnsureSuccessStatusCode();
-
-        //    return await response.Content
-        //        .ReadFromJsonAsync<AddressDto>()
-        //        ?? throw new InvalidOperationException();
-        //}
-
-        //public async Task UpdateAsync(
-        //    Guid id,
-        //    UpdateAddressRequest request)
-        //{
-        //    var response = await _httpClient.PutAsJsonAsync(
-        //        $"api/addresses/{id}",
-        //        request);
-
-        //    response.EnsureSuccessStatusCode();
-        //}
 
         public async Task DeleteAsync(Guid id)
         {
@@ -58,6 +41,20 @@ namespace AnwendungWPF.Clients
                 $"api/addresses/{id}");
 
             response.EnsureSuccessStatusCode();
+        }
+
+        private static AddressModel Map(AddressResponse response)
+        {
+            return new AddressModel
+            {
+                AddressId = response.AddressId,
+                PlaceId = response.PlaceId,
+                AddressLine1 = response.AddressLine1,
+                AddressLine2 = response.AddressLine2,
+                AddressLine3 = response.AddressLine3,
+                Name1 = response.Name1,
+                Name2 = response.Name2
+            };
         }
     }
 }

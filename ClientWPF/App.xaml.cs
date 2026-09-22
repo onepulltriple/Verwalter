@@ -1,16 +1,12 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Http;
-using System.Windows;
-using AnwendungWPF.Clients;
+﻿using AnwendungWPF.Clients;
 using AnwendungWPF.ViewModels;
-//using ClientWPF.Windows;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using System;
+using System.Windows;
 
 namespace AnwendungWPF
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
     public partial class App : System.Windows.Application
     {
         private IHost? _host;
@@ -22,16 +18,14 @@ namespace AnwendungWPF
             _host = Host.CreateDefaultBuilder()
                 .ConfigureServices((_, services) =>
                 {
-                    // API clients
-                    services.AddHttpClient<AddressApiClient>(client =>
+                    services.AddHttpClient<IAddressApiClient, AddressApiClient>(client =>
                     {
                         client.BaseAddress = new Uri("https://localhost:7171/");
                     });
 
-                    // ViewModels
                     services.AddTransient<MainViewModel>();
+                    services.AddTransient<AddressListViewModel>();
 
-                    // Windows
                     services.AddTransient<MainWindow>();
                 })
                 .Build();

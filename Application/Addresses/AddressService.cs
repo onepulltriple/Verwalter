@@ -13,5 +13,10 @@
         {
             return await _addressRepository.GetByIdAsync(addressId);
         }
+
+        public async Task<IReadOnlyList<AddressDto>> GetAllAsync()
+        {
+            return await _addressRepository.GetAllAsync();
+        }
     }
 }

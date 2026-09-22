@@ -1,41 +1,45 @@
-﻿<!--<Window x:Class="AnwendungWPF.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ClientWPF"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-
-    </Grid>
-</Window>-->
-<Window x:Class="AnwendungWPF.MainWindow"
+﻿<Window x:Class="AnwendungWPF.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="API Test"
-        Height="300"
-        Width="500">
+        Height="450"
+        Width="700">
 
-    <StackPanel Margin="20">
+    <Grid Margin="20">
 
-        <TextBlock Text="Address returned from API:"
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Addresses returned from API:"
                    FontSize="18"
                    FontWeight="Bold"
-                   Margin="0,0,0,20"/>
+                   Margin="0,0,0,15"/>
 
-        <TextBlock Text="{Binding Address.AddressLine1}"
-                   FontSize="16"
-                   Margin="0,0,0,10"/>
+        <ListBox Grid.Row="1"
+                 ItemsSource="{Binding Addresses.Addresses}">
 
-        <TextBlock Text="{Binding Address.AddressLine2}"
-                   FontSize="16"
-                   Margin="0,0,0,10"/>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Margin="0,0,0,15">
 
-        <TextBlock Text="{Binding Address.Name1}"
-                   FontSize="16"/>
+                        <TextBlock Text="{Binding AddressLine1}"
+                                   FontSize="16"
+                                   FontWeight="Bold"/>
 
-    </StackPanel>
+                        <TextBlock Text="{Binding AddressLine2}"
+                                   FontSize="14"/>
+
+                        <TextBlock Text="{Binding Name1}"
+                                   FontSize="14"/>
+
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+
+        </ListBox>
+
+    </Grid>
 
 </Window>
-

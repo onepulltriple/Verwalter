@@ -1,19 +1,4 @@
-﻿//using System.Windows;
-
-//namespace AnwendungWPF
-//{
-//    /// <summary>
-//    /// Interaction logic for MainWindow.xaml
-//    /// </summary>
-//    public partial class MainWindow : Window
-//    {
-//        public MainWindow()
-//        {
-//            InitializeComponent();
-//        }
-//    }
-//}
-using AnwendungWPF.ViewModels;
+﻿using AnwendungWPF.ViewModels;
 using System.Windows;
 
 namespace AnwendungWPF
@@ -32,9 +17,11 @@ namespace AnwendungWPF
             Loaded += MainWindow_Loaded;
         }
 
-        private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        private async void MainWindow_Loaded(
+            object sender,
+            RoutedEventArgs e)
         {
-            await _viewModel.LoadAddressAsync();
+            await _viewModel.Addresses.LoadCommand.ExecuteAsync(null);
         }
     }
 }

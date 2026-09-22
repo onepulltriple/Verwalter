@@ -25,10 +25,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Application\Application.csproj" />
+    <ProjectReference Include="..\APIContracts\APIContracts.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Services\" />
     <Folder Include="Views\" />
     <Folder Include="Windows\" />
   </ItemGroup>
