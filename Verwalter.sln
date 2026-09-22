@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.Tests", "Inf
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "API\API.csproj", "{8F6330D8-ECD0-473F-86C0-A879D07830EA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIContracts", "APIContracts\APIContracts.csproj", "{AE2A65C5-0FEB-4755-BA30-55F912918504}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{8F6330D8-ECD0-473F-86C0-A879D07830EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F6330D8-ECD0-473F-86C0-A879D07830EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8F6330D8-ECD0-473F-86C0-A879D07830EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE2A65C5-0FEB-4755-BA30-55F912918504}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE2A65C5-0FEB-4755-BA30-55F912918504}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE2A65C5-0FEB-4755-BA30-55F912918504}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE2A65C5-0FEB-4755-BA30-55F912918504}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
