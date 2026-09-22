@@ -1,7 +1,7 @@
-﻿using AnwendungWPF.ViewModels;
-using System.Windows;
+﻿using System.Windows;
+using AnwendungWPF.ViewModels;
 
-namespace AnwendungWPF
+namespace AnwendungWPF.Windows
 {
     public partial class MainWindow : Window
     {
