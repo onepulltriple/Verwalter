@@ -54,5 +54,10 @@
 
             return true;
         }
+
+        public async Task<bool> HasReferencesAsync(Guid countryId)
+        {
+            return await _countryRepository.HasReferencesAsync(countryId);
+        }
     }
 }

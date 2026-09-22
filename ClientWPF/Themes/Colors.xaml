@@ -24,4 +24,7 @@
     <SolidColorBrush x:Key="ButtonIsPressedBackground"      Color="#FFA9CCE3"/>
     <SolidColorBrush x:Key="ButtonIsDisabledBackground"     Color="#FFF4F4F4"/>
 
+    <SolidColorBrush x:Key="PrimaryButtonBackgroundBrush"   Color="#CC99FF99"/>
+    <SolidColorBrush x:Key="SecondaryButtonBackgroundBrush" Color="#CCFFFFFF"/>
+
 </ResourceDictionary>

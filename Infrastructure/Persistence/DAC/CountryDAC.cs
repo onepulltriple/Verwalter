@@ -1,5 +1,6 @@
 ﻿using Application.Countries;
 using Infrastructure.Persistence.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence.DAC
 {
@@ -48,6 +49,18 @@ namespace Infrastructure.Persistence.DAC
         protected override Guid GetEntityId(CountryDto dto)
         {
             return dto.CountryId;
+        }
+
+        public async Task<bool> HasReferencesAsync(Guid countryId)
+        {
+            if (await _context.Cities
+                .AnyAsync(c => c.CountryId == countryId))
+            {
+                return true;
+            }
+
+            return await _context.Postcodes
+                .AnyAsync(p => p.CountryId == countryId);
         }
     }
 }

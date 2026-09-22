@@ -98,6 +98,19 @@ namespace API.Controllers
             return NoContent();
         }
 
+        [HttpGet("{id:guid}/references")]
+        public async Task<ActionResult<CountryReferencesResponse>> HasReferences(
+            Guid id)
+        {
+            var hasReferences =
+                await _countryService.HasReferencesAsync(id);
+
+            return Ok(new CountryReferencesResponse
+            {
+                HasReferences = hasReferences
+            });
+        }
+
         private static CountryResponse Map(CountryDto country)
         {
             return new CountryResponse

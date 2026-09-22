@@ -50,11 +50,20 @@
         </Setter>
     </Style>
 
-    <Style x:Key="CrudActionBarButtonStyle"
+    <Style x:Key="CrudPrimaryButtonStyle"
            TargetType="Button"
            BasedOn="{StaticResource MainWindowDynamicButtonStyle}">
-        <Setter Property="MinWidth"                 Value="200"/>
-        <Setter Property="MinHeight"                Value="80"/>
+        <Setter Property="MinWidth"                 Value="60"/>
+        <Setter Property="MinHeight"                Value="30"/>
+        <Setter Property="Background"               Value="{StaticResource PrimaryButtonBackgroundBrush}"/>
+    </Style>
+
+    <Style x:Key="CrudSecondaryButtonStyle"
+           TargetType="Button"
+           BasedOn="{StaticResource MainWindowDynamicButtonStyle}">
+        <Setter Property="MinWidth"                 Value="60"/>
+        <Setter Property="MinHeight"                Value="30"/>
+        <Setter Property="Background"               Value="{StaticResource SecondaryButtonBackgroundBrush}"/>
     </Style>
 
 </ResourceDictionary>

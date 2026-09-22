@@ -11,5 +11,7 @@
         Task<bool> UpdateAsync(CountryDto country);
 
         Task<bool> DeleteAsync(Guid countryId);
+
+        Task<bool> HasReferencesAsync(Guid countryId);
     }
 }

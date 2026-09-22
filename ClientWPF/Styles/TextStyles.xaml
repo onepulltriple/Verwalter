@@ -29,7 +29,16 @@
            BasedOn="{StaticResource BodyTextStyle}">
         <Setter Property="HorizontalAlignment"      Value="Left"/>
         <Setter Property="VerticalAlignment"        Value="Center"/>
-        <Setter Property="Margin"                   Value="6"/>
+        <Setter Property="Margin"                   Value="6,0,6,6"/>
+    </Style>
+
+    <!--Pop-up window/dialog TEXT BLOCK style-->
+    <Style x:Key="PopUpWindowEditorTextStyle"
+           TargetType="TextBlock"
+           BasedOn="{StaticResource BodyTextStyle}">
+        <Setter Property="HorizontalAlignment"      Value="Left"/>
+        <Setter Property="VerticalAlignment"        Value="Center"/>
+        <Setter Property="Margin"                   Value="0,0,80,0"/>
     </Style>
 
     <!--Pop-up window/dialog WARNING TEXT style-->
@@ -37,17 +46,19 @@
            TargetType="TextBlock"
            BasedOn="{StaticResource PopUpWindowBodyTextStyle}">
         <Setter Property="Foreground"               Value="{StaticResource WarningTextBrush}"/>
-        <Setter Property="Margin"                   Value="20"/>
-        <Setter Property="Height"                   Value="32"/>
+        <Setter Property="Height"                   Value="20"/>
+        <Setter Property="Margin"                   Value="6"/>
+        <Setter Property="VerticalAlignment"        Value="Center"/>
+        <Setter Property="HorizontalAlignment"      Value="Center"/>
     </Style>
 
     <!--Pop-up window/dialog HEADING style-->
-    <Style x:Key="PopUpWindowBodyHeadingTextStyle"
+    <Style x:Key="PopUpWindowHeadingTextStyle"
            TargetType="TextBlock"
            BasedOn="{StaticResource PopUpWindowBodyTextStyle}">
         <Setter Property="HorizontalAlignment"      Value="Left"/>
         <Setter Property="VerticalAlignment"        Value="Center"/>
-        <Setter Property="Margin"                   Value="6,12,0,12"/>
+        <Setter Property="Margin"                   Value="6,0,0,0"/>
         <Setter Property="FontSize"                 Value="20"/>
         <Setter Property="FontWeight"               Value="SemiBold"/>
     </Style>
@@ -65,7 +76,7 @@
     <Style x:Key="PopUpWindowTextBoxTextStyle"
            TargetType="TextBox"
            BasedOn="{StaticResource {x:Type TextBox}}">
-        <Setter Property="Margin"                   Value="6"/>
+        <Setter Property="Margin"                   Value="6,6,0,6"/>
         <Setter Property="Padding"                  Value="6"/>
         <Setter Property="MinHeight"                Value="6"/>
         <Setter Property="Height"                   Value="32"/>

@@ -5,7 +5,7 @@
            TargetType="Grid"
            >
         <!-- Grid has no implicit/default style that can be targeted with {x:Type Grid} -->
-        <Setter Property="Margin"                   Value="20,0,0,0"/>
+        <Setter Property="Margin"                   Value="6,0,0,0"/>
     </Style>
 
 </ResourceDictionary>

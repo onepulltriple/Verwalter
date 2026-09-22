@@ -1,45 +1,28 @@
 ﻿<Window x:Class="AnwendungWPF.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="API Test"
-        Height="450"
-        Width="700">
+        Title="Verwalter"
+        Background="{StaticResource DefaultBackgroundBrush}"
+        Style="{StaticResource MainWindowStyle}"
+        >
 
-    <Grid Margin="20">
+    <DockPanel>
+        <!--main menu-->
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_Manage"
+                      Style="{StaticResource MainMenuItemStyle}">
+                <MenuItem Header="_Countries"
+                          Style="{StaticResource MainMenuItemStyle}"
+                          Command="{Binding ManageCountriesCommand}"/>
+            </MenuItem>
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+            <MenuItem Header="_Exit"
+                      Style="{StaticResource MainMenuItemStyle}">
+                <MenuItem Header="_Quit"
+                          Style="{StaticResource MainMenuItemStyle}"
+                          Command="{Binding ExitCommand}"/>
+            </MenuItem>
+        </Menu>
 
-        <TextBlock Text="Addresses returned from API:"
-                   FontSize="18"
-                   FontWeight="Bold"
-                   Margin="0,0,0,15"/>
-
-        <ListBox Grid.Row="1"
-                 ItemsSource="{Binding Addresses.Addresses}">
-
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Margin="0,0,0,15">
-
-                        <TextBlock Text="{Binding AddressLine1}"
-                                   FontSize="16"
-                                   FontWeight="Bold"/>
-
-                        <TextBlock Text="{Binding AddressLine2}"
-                                   FontSize="14"/>
-
-                        <TextBlock Text="{Binding Name1}"
-                                   FontSize="14"/>
-
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-
-        </ListBox>
-
-    </Grid>
-
+    </DockPanel>
 </Window>
