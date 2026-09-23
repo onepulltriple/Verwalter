@@ -1,9 +1,9 @@
-﻿using System;
+﻿using AnwendungWPF.Configuration;
+using AnwendungWPF.Models;
+using ApiContracts.Authentication;
+using Microsoft.Extensions.Options;
 using System.Net.Http;
 using System.Net.Http.Json;
-using System.Threading.Tasks;
-using ApiContracts.Authentication;
-using AnwendungWPF.Models;
 
 namespace AnwendungWPF.Clients
 {
@@ -11,9 +11,11 @@ namespace AnwendungWPF.Clients
     {
         private readonly HttpClient _httpClient;
 
-        public AppUserApiClient(HttpClient httpClient)
+        public AppUserApiClient(HttpClient httpClient, IOptions<ApiSettings> apiSettings)
         {
-            _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));
+            _httpClient = httpClient;
+            _httpClient.BaseAddress =
+                new Uri(apiSettings.Value.BaseUrl);
         }
 
         public async Task<(bool Success, string? ErrorMessage, AppUserModel? User, string? JwtToken)> LoginAsync(string username, string password)
