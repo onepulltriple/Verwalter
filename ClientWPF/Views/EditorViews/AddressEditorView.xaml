@@ -18,7 +18,9 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <!--<RowDefinition Height="Auto"/>-->
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -82,14 +84,37 @@
                  Text="{Binding Name2,
                                 UpdateSourceTrigger=PropertyChanged}"/>
 
-        <!--<TextBlock Grid.Row="5"
+        <TextBlock Grid.Row="5"
                    Grid.Column="0"
                    Style="{StaticResource PopUpWindowEditorTextStyle}"
-                   Text="Place ID"/>
+                   Text="City"/>
 
-        <TextBlock Grid.Row="5"
-                   Grid.Column="1"
+        <TextBox Grid.Row="5"
+                 Grid.Column="1"
+                 Style="{StaticResource PopUpWindowTextBoxTextStyle}"
+                 Text="{Binding CityName,
+                                UpdateSourceTrigger=PropertyChanged}"/>
+
+        <TextBlock Grid.Row="6"
+                   Grid.Column="0"
                    Style="{StaticResource PopUpWindowEditorTextStyle}"
-                   Text="{Binding PlaceId}"/>-->
+                   Text="Country"/>
+
+        <TextBox Grid.Row="6"
+                 Grid.Column="1"
+                 Style="{StaticResource PopUpWindowTextBoxTextStyle}"
+                 Text="{Binding CountryName,
+                                UpdateSourceTrigger=PropertyChanged}"/>
+
+        <TextBlock Grid.Row="7"
+                   Grid.Column="0"
+                   Style="{StaticResource PopUpWindowEditorTextStyle}"
+                   Text="Postcode"/>
+
+        <TextBox Grid.Row="7"
+                 Grid.Column="1"
+                 Style="{StaticResource PopUpWindowTextBoxTextStyle}"
+                 Text="{Binding Postcode,
+                                UpdateSourceTrigger=PropertyChanged}"/>
     </Grid>
 </UserControl>

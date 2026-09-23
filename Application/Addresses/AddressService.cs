@@ -3,10 +3,14 @@
     public class AddressService : IAddressService
     {
         private readonly IAddressRepository _addressRepository;
+        private readonly IAddressWithPlaceRepository _addressWithPlaceRepository;
 
-        public AddressService(IAddressRepository addressRepository)
+        public AddressService(
+            IAddressRepository addressRepository,
+            IAddressWithPlaceRepository addressWithPlaceRepository)
         {
             _addressRepository = addressRepository;
+            _addressWithPlaceRepository = addressWithPlaceRepository;
         }
 
         public async Task<IReadOnlyList<AddressDto>> GetAllAsync()
@@ -53,6 +57,32 @@
             await _addressRepository.DeleteAsync(addressId);
 
             return true;
+        }
+
+        public async Task<AddressDto> CreateWithPlaceAsync(
+            CreateAddressWithPlaceCommand command)
+        {
+            if (string.IsNullOrWhiteSpace(command.CountryName))
+                throw new ArgumentException(
+                    "Country name is required.",
+                    nameof(command));
+
+            if (string.IsNullOrWhiteSpace(command.Postcode))
+                throw new ArgumentException(
+                    "Postcode is required.",
+                    nameof(command));
+
+            if (string.IsNullOrWhiteSpace(command.CityName))
+                throw new ArgumentException(
+                    "City name is required.",
+                    nameof(command));
+
+            if (string.IsNullOrWhiteSpace(command.AddressLine1))
+                throw new ArgumentException(
+                    "Address line 1 is required.",
+                    nameof(command));
+
+            return await _addressWithPlaceRepository.CreateAsync(command);
         }
     }
 }

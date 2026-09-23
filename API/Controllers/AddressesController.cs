@@ -63,6 +63,31 @@ namespace API.Controllers
                 Map(created));
         }
 
+        [HttpPost("with-place")]
+        public async Task<ActionResult<AddressResponse>> CreateWithPlace(
+            CreateAddressWithPlaceRequest request)
+        {
+            var command = new CreateAddressWithPlaceCommand
+            {
+                CountryName = request.CountryName,
+                Postcode = request.Postcode,
+                CityName = request.CityName,
+                AddressLine1 = request.AddressLine1,
+                AddressLine2 = request.AddressLine2,
+                AddressLine3 = request.AddressLine3,
+                Name1 = request.Name1,
+                Name2 = request.Name2
+            };
+
+            var created =
+                await _addressService.CreateWithPlaceAsync(command);
+
+            return CreatedAtAction(
+                nameof(GetById),
+                new { id = created.AddressId },
+                Map(created));
+        }
+
         [HttpPut("{id:guid}")]
         public async Task<IActionResult> Update(
             Guid id,

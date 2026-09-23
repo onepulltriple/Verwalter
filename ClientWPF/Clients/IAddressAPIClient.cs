@@ -16,6 +16,16 @@ namespace AnwendungWPF.Clients
             string? name1,
             string? name2);
 
+        Task<AddressModel> CreateWithPlaceAsync(
+            string countryName,
+            string postcode,
+            string cityName,
+            string addressLine1,
+            string? addressLine2,
+            string? addressLine3,
+            string? name1,
+            string? name2);
+
         Task UpdateAsync(
             Guid addressId,
             Guid placeId,

@@ -225,14 +225,25 @@ namespace AnwendungWPF.ViewModels
             if (!Editor.IsEditing)
                 return;
 
-            if (Editor.WorkingCopyAddress is null || !Editor.IsValid)
-                return;
+            Editor.ApplyClientFormatting();
 
             var address = Editor.WorkingCopyAddress;
 
-            if (address.AddressId == Guid.Empty)
+            if (address.AddressId == Guid.Empty &&
+                address.PlaceId == Guid.Empty)
             {
-                // new address
+                await _addressApiClient.CreateWithPlaceAsync(
+                    address.CountryName,
+                    address.Postcode,
+                    address.CityName,
+                    address.AddressLine1,
+                    address.AddressLine2,
+                    address.AddressLine3,
+                    address.Name1,
+                    address.Name2);
+            }
+            else if (address.AddressId == Guid.Empty)
+            {
                 await _addressApiClient.CreateAsync(
                     address.PlaceId,
                     address.AddressLine1,
@@ -243,7 +254,6 @@ namespace AnwendungWPF.ViewModels
             }
             else
             {
-                // existing address
                 await _addressApiClient.UpdateAsync(
                     address.AddressId,
                     address.PlaceId,

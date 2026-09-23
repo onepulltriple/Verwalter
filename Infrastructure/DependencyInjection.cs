@@ -31,6 +31,7 @@ namespace Infrastructure
             services.AddScoped<IPlaceRepository, PlaceDAC>();
             services.AddScoped<IAppUserRepository, AppUserDAC>();
             services.AddScoped<IAddressCategoryRepository, AddressCategoryDAC>();
+            services.AddScoped<IAddressWithPlaceRepository, AddressWithPlaceDAC>();
 
             return services;
         }

@@ -108,6 +108,42 @@ namespace AnwendungWPF.Clients
             response.EnsureSuccessStatusCode();
         }
 
+        public async Task<AddressModel> CreateWithPlaceAsync(
+            string countryName,
+            string postcode,
+            string cityName,
+            string addressLine1,
+            string? addressLine2,
+            string? addressLine3,
+            string? name1,
+            string? name2)
+        {
+            var request = new CreateAddressWithPlaceRequest
+            {
+                CountryName = countryName,
+                Postcode = postcode,
+                CityName = cityName,
+                AddressLine1 = addressLine1,
+                AddressLine2 = addressLine2,
+                AddressLine3 = addressLine3,
+                Name1 = name1,
+                Name2 = name2
+            };
+
+            var response = await _httpClient.PostAsJsonAsync(
+                "api/addresses/with-place",
+                request);
+
+            response.EnsureSuccessStatusCode();
+
+            var address =
+                await response.Content.ReadFromJsonAsync<AddressResponse>()
+                ?? throw new InvalidOperationException(
+                    "The API returned an empty response when creating an address and place.");
+
+            return Map(address);
+        }
+
         private static AddressModel Map(AddressResponse response)
         {
             return new AddressModel

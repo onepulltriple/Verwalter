@@ -16,9 +16,15 @@
 
         public string? Name2 { get; set; }
 
-        public string City { get; set; } = string.Empty;
+        // Values used when creating a new place.
+        public string CityName { get; set; } = string.Empty;
+
+        public string CountryName { get; set; } = string.Empty;
 
         public string Postcode { get; set; } = string.Empty;
+
+        // Values used when displaying the resolved place.
+        public string City { get; set; } = string.Empty;
 
         public string Country { get; set; } = string.Empty;
 

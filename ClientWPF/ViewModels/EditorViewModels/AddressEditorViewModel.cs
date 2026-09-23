@@ -1,4 +1,5 @@
 ﻿using AnwendungWPF.Models;
+using AnwendungWPF.Utilities;
 
 namespace AnwendungWPF.ViewModels.EditorViewModels
 {
@@ -24,6 +25,9 @@ namespace AnwendungWPF.ViewModels.EditorViewModels
                 OnPropertyChanged(nameof(AddressLine3));
                 OnPropertyChanged(nameof(Name1));
                 OnPropertyChanged(nameof(Name2));
+                OnPropertyChanged(nameof(CityName));
+                OnPropertyChanged(nameof(CountryName));
+                OnPropertyChanged(nameof(Postcode));
 
                 OnPropertyChanged(nameof(IsEditing));
 
@@ -139,6 +143,63 @@ namespace AnwendungWPF.ViewModels.EditorViewModels
             }
         }
 
+        public string CityName
+        {
+            get => WorkingCopyAddress?.CityName ?? string.Empty;
+            set
+            {
+                if (WorkingCopyAddress is null)
+                    return;
+
+                if (WorkingCopyAddress.CityName == value)
+                    return;
+
+                WorkingCopyAddress.CityName = value;
+
+                OnPropertyChanged(nameof(CityName));
+
+                Validate();
+            }
+        }
+
+        public string CountryName
+        {
+            get => WorkingCopyAddress?.CountryName ?? string.Empty;
+            set
+            {
+                if (WorkingCopyAddress is null)
+                    return;
+
+                if (WorkingCopyAddress.CountryName == value)
+                    return;
+
+                WorkingCopyAddress.CountryName = value;
+
+                OnPropertyChanged(nameof(CountryName));
+
+                Validate();
+            }
+        }
+
+        public string Postcode
+        {
+            get => WorkingCopyAddress?.Postcode ?? string.Empty;
+            set
+            {
+                if (WorkingCopyAddress is null)
+                    return;
+
+                if (WorkingCopyAddress.Postcode == value)
+                    return;
+
+                WorkingCopyAddress.Postcode = value;
+
+                OnPropertyChanged(nameof(Postcode));
+
+                Validate();
+            }
+        }
+
         private string _errorMessage = string.Empty;
 
         public string ErrorMessage
@@ -167,16 +228,26 @@ namespace AnwendungWPF.ViewModels.EditorViewModels
                 return;
             }
 
-            if (WorkingCopyAddress.PlaceId == Guid.Empty)
+            if (string.IsNullOrWhiteSpace(WorkingCopyAddress.AddressLine1))
             {
-                ErrorMessage = "Place is required.";
+                ErrorMessage = "Address line 1 is required.";
                 RaiseValidityChanged();
                 return;
             }
 
-            if (string.IsNullOrWhiteSpace(WorkingCopyAddress.AddressLine1))
+            var hasExistingPlace =
+                WorkingCopyAddress.PlaceId != Guid.Empty;
+
+            var hasNewPlaceValues =
+                !string.IsNullOrWhiteSpace(WorkingCopyAddress.CityName) &&
+                !string.IsNullOrWhiteSpace(WorkingCopyAddress.CountryName) &&
+                !string.IsNullOrWhiteSpace(WorkingCopyAddress.Postcode);
+
+            if (!hasExistingPlace && !hasNewPlaceValues)
             {
-                ErrorMessage = "Address line 1 is required.";
+                ErrorMessage =
+                    "Select an existing place or enter a city, country, and postcode.";
+
                 RaiseValidityChanged();
                 return;
             }
@@ -200,6 +271,9 @@ namespace AnwendungWPF.ViewModels.EditorViewModels
                 AddressLine3 = string.Empty,
                 Name1 = string.Empty,
                 Name2 = string.Empty,
+                CityName = string.Empty,
+                CountryName = string.Empty,
+                Postcode = string.Empty,
                 PlaceId = Guid.Empty
             };
         }
@@ -214,7 +288,13 @@ namespace AnwendungWPF.ViewModels.EditorViewModels
                 AddressLine2 = address.AddressLine2,
                 AddressLine3 = address.AddressLine3,
                 Name1 = address.Name1,
-                Name2 = address.Name2
+                Name2 = address.Name2,
+                CityName = address.City,
+                CountryName = address.Country,
+                Postcode = address.Postcode,
+                City = address.City,
+                Country = address.Country,
+                ModifiedUtc = address.ModifiedUtc
             };
         }
 
@@ -223,6 +303,23 @@ namespace AnwendungWPF.ViewModels.EditorViewModels
             WorkingCopyAddress = null;
             ErrorMessage = string.Empty;
             IsValid = false;
+        }
+
+        public void ApplyClientFormatting()
+        {
+            if (WorkingCopyAddress is null)
+                return;
+
+            WorkingCopyAddress.CityName =
+                TextFormatting.ToTitleCase(WorkingCopyAddress.CityName);
+
+            WorkingCopyAddress.CountryName =
+                TextFormatting.ToTitleCase(WorkingCopyAddress.CountryName);
+
+            OnPropertyChanged(nameof(CityName));
+            OnPropertyChanged(nameof(CountryName));
+
+            Validate();
         }
     }
 }
