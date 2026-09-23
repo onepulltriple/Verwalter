@@ -1,5 +1,5 @@
 ﻿using AnwendungWPF.Clients;
-using AnwendungWPF.Infrastructure;
+using AnwendungWPF.Utilities;  
 using System.Collections.ObjectModel;
 
 namespace AnwendungWPF.ViewModels

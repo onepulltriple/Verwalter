@@ -1,0 +1,109 @@
+﻿<UserControl x:Class="AnwendungWPF.Views.AppUserLoginView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AnwendungWPF.Views"
+             xmlns:viewmodels="clr-namespace:AnwendungWPF.ViewModels"
+             xmlns:utilities="clr-namespace:AnwendungWPF.Utilities"
+             mc:Ignorable="d" 
+             Background="{StaticResource DefaultBackgroundBrush}"
+             d:DesignHeight="360" 
+             d:DesignWidth="400"
+             d:DataContext="{d:DesignInstance Type=viewmodels:AppUserLoginViewModel}"
+             >
+    
+    <Grid Loaded="GridLoaded">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
+
+        <!--headline-->
+        <TextBlock
+            Grid.Row="0"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Text="User Login"
+            Style="{StaticResource PopUpWindowHeadingTextStyle}"
+            >
+        </TextBlock>
+
+
+        <!--middle section-->
+        <TextBlock    
+            Grid.Row="1" 
+            Grid.Column="0" 
+            Text="Username"
+            Style="{StaticResource PopUpWindowBodyTextStyle}"
+            HorizontalAlignment="Center"
+            />
+        <TextBox      
+            Grid.Row="1" 
+            Grid.Column="1" 
+            Name="TB00" 
+            Text="{Binding EnteredUsername}"
+            KeyDown="TB00KeyDownHandler"
+            Margin="6"
+            Style="{StaticResource PopUpWindowTextBoxTextStyle}"
+            />
+        <TextBlock    
+            Grid.Row="2" 
+            Grid.Column="0" 
+            Text="Password"
+            Style="{StaticResource PopUpWindowBodyTextStyle}"
+            HorizontalAlignment="Center"
+            />
+        <PasswordBox  
+            Grid.Row="2"
+            Grid.Column="1" 
+            Name="PB00" 
+            KeyDown="PB00KeyDownHandler"
+            Style="{StaticResource PopUpWindowPasswordBoxTextStyle}"
+            utilities:PasswordBoxHelper.BoundPassword="{Binding EnteredPassword, Mode=TwoWay}"
+            />
+
+        <!--lower section-->
+        <TextBlock Name="UIErrorMessage"
+                   Grid.Row="3" Grid.Column="0" 
+                   Grid.ColumnSpan="2"
+                   Text="{Binding DisplayedErrorMessage}"
+                   Style="{StaticResource PopUpWindowWarningBodyTextStyle}"
+                   HorizontalAlignment="Center"
+                   />
+
+        <!--bottom section-->
+        <Button      
+            Grid.Row="4" 
+            Grid.Column="0" 
+            Name="QuitButton" 
+            Click="QuitButtonClicked" 
+            Style="{StaticResource CrudSecondaryButtonStyle}"
+            Height="60"
+            >
+            <TextBlock Text="Quit"
+                       Style="{StaticResource PopUpWindowButtonTextStyle}"
+                       />
+        </Button>
+        <Button      
+            Grid.Row="4" 
+            Grid.Column="1" 
+            Name="LoginButton" 
+            Command="{Binding LoginCommand}"
+            Style="{StaticResource CrudPrimaryButtonStyle}"
+            Height="60"
+            >
+            <TextBlock Text="Login"
+                       Style="{StaticResource PopUpWindowButtonTextStyle}"
+                       />
+        </Button>
+
+    </Grid>
+</UserControl>

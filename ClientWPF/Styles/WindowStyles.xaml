@@ -22,6 +22,8 @@
     <Style x:Key="LoginWindowOrDialogStyle"
            TargetType="Window"
            BasedOn="{StaticResource {x:Type Window}}">
+        <Setter Property="MinWidth"             Value="360"/>
+        <Setter Property="MinHeight"            Value="400"/>
     </Style>
 
 </ResourceDictionary>

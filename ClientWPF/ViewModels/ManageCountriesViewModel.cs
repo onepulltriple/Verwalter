@@ -1,7 +1,6 @@
 ﻿using AnwendungWPF.Clients;
-using AnwendungWPF.Infrastructure;
-using AnwendungWPF.Models;
 using AnwendungWPF.Utilities;
+using AnwendungWPF.Models;
 using AnwendungWPF.ViewModels;
 using AnwendungWPF.ViewModels.EditorViewModels;
 using System.Collections.Generic;

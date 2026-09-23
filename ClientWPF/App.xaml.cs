@@ -27,13 +27,19 @@ namespace AnwendungWPF
 
                     services.AddHttpClient<IAddressApiClient, AddressApiClient>();
                     services.AddHttpClient<ICountryApiClient, CountryApiClient>();
-                    
+                    //services.AddHttpClient<IAppUserApiClient, AppUserApiClient>();
+                    services.AddHttpClient<IAppUserApiClient, AppUserApiClient>(
+                        c => c.BaseAddress = new Uri("https://localhost:7171/")
+                        );
+
                     // ViewModels and Windows
-                    services.AddTransient<MainViewModel>();
+                    //services.AddTransient<MainViewModel>();
+                    services.AddTransient<AppUserLoginViewModel>();
                     services.AddTransient<MainWindowViewModel>();
                     services.AddTransient<ManageCountriesViewModel>();
                     services.AddTransient<AddressListViewModel>();
 
+                    services.AddTransient<AppUserLoginWindow>();
                     services.AddTransient<MainWindow>();
                     services.AddTransient<ManageCountriesWindow>();
 
@@ -43,7 +49,7 @@ namespace AnwendungWPF
 
             _host.Start();
 
-            var mainWindow = _host.Services.GetRequiredService<MainWindow>();
+            var mainWindow = _host.Services.GetRequiredService<AppUserLoginWindow>();
             mainWindow.Show();
         }
 
