@@ -4,6 +4,7 @@ using Application.Cities;
 using Application.Countries;
 using Application.Places;
 using Application.Postcodes;
+using Application.Authentication;
 using Infrastructure.Persistence.DAC;
 using Infrastructure.Persistence.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -28,6 +29,7 @@ namespace Infrastructure
             services.AddScoped<IPostcodeRepository, PostcodeDAC>();
             services.AddScoped<ICityRepository, CityDAC>();
             services.AddScoped<IPlaceRepository, PlaceDAC>();
+            services.AddScoped<IAppUserRepository, AppUserDAC>();
             services.AddScoped<IAddressCategoryRepository, AddressCategoryDAC>();
 
             return services;
