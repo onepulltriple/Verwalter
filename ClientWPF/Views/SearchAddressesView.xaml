@@ -162,7 +162,22 @@
                                     Binding="{Binding Name2}"
                                     Width="*"/>-->
 
-                <DataGridTemplateColumn Header="Place"
+                <DataGridTextColumn Header="City"
+                                    ElementStyle="{StaticResource DefaultDataGridTextStyle}"
+                                    Binding="{Binding City}"
+                                    Width="*"/>
+
+                <DataGridTextColumn Header="Postcode"
+                                    ElementStyle="{StaticResource DefaultDataGridTextStyle}"
+                                    Binding="{Binding Postcode}"
+                                    Width="*"/>
+
+                <DataGridTextColumn Header="Country"
+                                    ElementStyle="{StaticResource DefaultDataGridTextStyle}"
+                                    Binding="{Binding Country}"
+                                    Width="*"/>
+
+                <!--<DataGridTemplateColumn Header="Place"
                                         Width="1.5*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -179,9 +194,9 @@
                                            Text="{Binding Postcode}"
                                            Margin="-4,0,-1,0"/>
 
-                                <!--<TextBlock Style="{StaticResource DefaultDataGridTextStyle}"
+                                --><!--<TextBlock Style="{StaticResource DefaultDataGridTextStyle}"
                                            Text=","
-                                           Margin="0,0,0,0"/>-->
+                                           Margin="0,0,0,0"/>--><!--
 
                                 <TextBlock Style="{StaticResource DefaultDataGridTextStyle}"
                                            Text="{Binding Country}"
@@ -189,7 +204,7 @@
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                </DataGridTemplateColumn>-->
 
             </DataGrid.Columns>
         </DataGrid>

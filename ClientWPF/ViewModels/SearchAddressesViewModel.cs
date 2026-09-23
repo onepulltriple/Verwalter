@@ -10,6 +10,8 @@ namespace AnwendungWPF.ViewModels
     {
         private readonly IAddressApiClient _addressApiClient;
 
+        private readonly IPlaceApiClient _placeApiClient;
+
         private IReadOnlyList<AddressModel> _allAddresses =
             Array.Empty<AddressModel>();
 
@@ -53,11 +55,16 @@ namespace AnwendungWPF.ViewModels
 
         public RelayCommand ShowFullListCommand { get; }
 
-        public SearchAddressesViewModel(IAddressApiClient addressApiClient)
+        public SearchAddressesViewModel(
+            IAddressApiClient addressApiClient, 
+            IPlaceApiClient placeApiClient
+            )
         {
             ArgumentNullException.ThrowIfNull(addressApiClient);
+            ArgumentNullException.ThrowIfNull(placeApiClient);
 
             _addressApiClient = addressApiClient;
+            _placeApiClient = placeApiClient;
 
             Editor = new AddressSearchEditorViewModel();
 
@@ -66,6 +73,7 @@ namespace AnwendungWPF.ViewModels
 
             ShowFullListCommand =
                 new RelayCommand(_ => ShowFullList());
+            _placeApiClient = placeApiClient;
         }
 
         public async Task InitialiseAsync()
@@ -75,6 +83,25 @@ namespace AnwendungWPF.ViewModels
                 ErrorMessage = string.Empty;
 
                 _allAddresses = await _addressApiClient.GetAllAsync();
+
+                var places = await _placeApiClient.GetAllAsync();
+
+                var placesById = places.ToDictionary(
+                    place => place.PlaceId);
+
+                foreach (var address in _allAddresses)
+                {
+                    if (!placesById.TryGetValue(
+                            address.PlaceId,
+                            out var place))
+                    {
+                        continue;
+                    }
+
+                    address.City = place.City;
+                    address.Postcode = place.Postcode;
+                    address.Country = place.Country;
+                }
 
                 ListOfAddresses.Clear();
 

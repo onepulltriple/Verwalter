@@ -15,6 +15,8 @@ namespace AnwendungWPF.ViewModels
 
         private readonly IAddressApiClient _addressApiClient;
 
+        private readonly IPlaceApiClient _placeApiClient;
+
         public ObservableCollection<AddressModel> ListOfAddresses { get; } = new();
 
         public SearchAddressesViewModel SearchAddressesViewModel { get; }
@@ -26,12 +28,17 @@ namespace AnwendungWPF.ViewModels
         public ICommand ExitCommand { get; }
         #endregion
 
-        public MainWindowViewModel(IServiceProvider serviceProvider, IAddressApiClient addressApiClient)
+        public MainWindowViewModel(
+            IServiceProvider serviceProvider, 
+            IAddressApiClient addressApiClient,
+            IPlaceApiClient placeApiClient)
         {
             _serviceProvider = serviceProvider
                 ?? throw new ArgumentNullException(nameof(serviceProvider));
             _addressApiClient = addressApiClient
-                ?? throw new ArgumentNullException(nameof(serviceProvider));
+                ?? throw new ArgumentNullException(nameof(addressApiClient));
+            _placeApiClient = placeApiClient
+                ?? throw new ArgumentNullException(nameof(addressApiClient));
 
             ManageCountriesCommand =
                 new RelayCommand(ManageCountries);
@@ -43,7 +50,7 @@ namespace AnwendungWPF.ViewModels
                 new RelayCommand(Exit);
 
             SearchAddressesViewModel =
-                new SearchAddressesViewModel(addressApiClient);
+                new SearchAddressesViewModel(addressApiClient, placeApiClient);
         }
 
         // initialization

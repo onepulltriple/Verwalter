@@ -62,23 +62,23 @@
         <TextBlock Grid.Row="3"
                    Grid.Column="0"
                    Style="{StaticResource PopUpWindowEditorTextStyle}"
-                   Text="Country"/>
+                   Text="Postcode"/>
 
         <TextBox Grid.Row="3"
                  Grid.Column="1"
                  Style="{StaticResource PopUpWindowTextBoxTextStyle}"
-                 Text="{Binding CountryName,
+                 Text="{Binding Postcode,
                                 UpdateSourceTrigger=PropertyChanged}"/>
 
         <TextBlock Grid.Row="4"
                    Grid.Column="0"
                    Style="{StaticResource PopUpWindowEditorTextStyle}"
-                   Text="Postcode"/>
+                   Text="Country"/>
 
         <TextBox Grid.Row="4"
                  Grid.Column="1"
                  Style="{StaticResource PopUpWindowTextBoxTextStyle}"
-                 Text="{Binding Postcode,
+                 Text="{Binding CountryName,
                                 UpdateSourceTrigger=PropertyChanged}"/>
     </Grid>
 </UserControl>
