@@ -17,6 +17,8 @@ namespace AnwendungWPF.ViewModels
 
         public ObservableCollection<AddressModel> ListOfAddresses { get; } = new();
 
+        public SearchAddressesViewModel SearchAddressesViewModel { get; }
+
         #region menu commands
         public ICommand ManageCountriesCommand { get; }
         public ICommand ManageAddressesCommand { get; }
@@ -39,6 +41,9 @@ namespace AnwendungWPF.ViewModels
 
             ExitCommand =
                 new RelayCommand(Exit);
+
+            SearchAddressesViewModel =
+                new SearchAddressesViewModel(addressApiClient);
         }
 
         // initialization
@@ -52,6 +57,8 @@ namespace AnwendungWPF.ViewModels
             {
                 ListOfAddresses.Add(address);
             }
+
+            await SearchAddressesViewModel.InitialiseAsync();
         }
 
 

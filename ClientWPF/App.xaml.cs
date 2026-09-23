@@ -13,7 +13,7 @@ namespace AnwendungWPF
     {
         private IHost? _host;
 
-        protected override void OnStartup(StartupEventArgs e)
+        protected override async void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
 
@@ -48,8 +48,10 @@ namespace AnwendungWPF
 
             _host.Start();
 
-            var mainWindow = _host.Services.GetRequiredService<MainWindow>();
-            mainWindow.Show();
+            var loginWindow =
+                _host.Services.GetRequiredService<AppUserLoginWindow>();
+
+            loginWindow.Show();
         }
 
         protected override async void OnExit(ExitEventArgs e)

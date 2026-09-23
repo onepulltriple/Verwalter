@@ -8,6 +8,9 @@
     <Compile Update="Views\EditorViews\AddressEditorView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\EditorViews\AddressSearchEditorView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\EditorViews\CountryEditorView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -15,6 +18,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\ManageCountriesView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\SearchAddressesView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Windows\AppUserLoginWindow.xaml.cs">

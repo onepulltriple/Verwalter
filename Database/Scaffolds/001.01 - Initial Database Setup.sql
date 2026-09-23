@@ -495,3 +495,11 @@ CREATE TABLE security.AppUserAppUserCategory
         REFERENCES security.AppUserCategory(AppUserCategoryId)
 );
 GO
+
+DELETE FROM [security].[AppUser]
+INSERT INTO [security].[AppUser]
+	(Username, PasswordHash, Active)
+	VALUES
+	('admin','$2a$11$lLCjSYzZ7oE/7k1xDyn17eHPGyXgM0e7AiCQ7g934I6FrADoQytBe', 1)
+
+SELECT * FROM [security].[AppUser] ORDER BY [AppUserId]
