@@ -65,43 +65,52 @@ namespace Infrastructure.Persistence.DAC
             IQueryable<Address> query = _context.Set<Address>()
                 .AsNoTracking();
 
-            if (!string.IsNullOrWhiteSpace(criteria.Street))
+            if (!string.IsNullOrWhiteSpace(criteria.AddressLine1))
             {
-                query = query.Where(x =>
-                    x.AddressLine1.Contains(criteria.Street));
+                query = query.Where(address =>
+                    address.AddressLine1.Contains(
+                        criteria.AddressLine1));
             }
 
-            if (!string.IsNullOrWhiteSpace(criteria.Name))
+            if (!string.IsNullOrWhiteSpace(criteria.AddressLine2))
             {
-                query = query.Where(x =>
-                    (x.Name1 != null && x.Name1.Contains(criteria.Name)) ||
-                    (x.Name2 != null && x.Name2.Contains(criteria.Name)));
+                query = query.Where(address =>
+                    address.AddressLine2 != null &&
+                    address.AddressLine2.Contains(
+                        criteria.AddressLine2));
             }
 
-            if (!string.IsNullOrWhiteSpace(criteria.SearchText))
+            if (!string.IsNullOrWhiteSpace(criteria.AddressLine3))
             {
-                query = query.Where(x =>
-                    x.AddressLine1.Contains(criteria.SearchText) ||
-                    (x.AddressLine2 != null &&
-                     x.AddressLine2.Contains(criteria.SearchText)) ||
-                    (x.AddressLine3 != null &&
-                     x.AddressLine3.Contains(criteria.SearchText)) ||
-                    (x.Name1 != null &&
-                     x.Name1.Contains(criteria.SearchText)) ||
-                    (x.Name2 != null &&
-                     x.Name2.Contains(criteria.SearchText)));
+                query = query.Where(address =>
+                    address.AddressLine3 != null &&
+                    address.AddressLine3.Contains(
+                        criteria.AddressLine3));
             }
 
-            if (criteria.PlaceId.HasValue)
+            if (!string.IsNullOrWhiteSpace(criteria.Name1))
             {
-                query = query.Where(x =>
-                    x.PlaceId == criteria.PlaceId.Value);
+                query = query.Where(address =>
+                    address.Name1 != null &&
+                    address.Name1.Contains(criteria.Name1));
             }
 
-            if (criteria.CountryId.HasValue ||
+            if (!string.IsNullOrWhiteSpace(criteria.Name2))
+            {
+                query = query.Where(address =>
+                    address.Name2 != null &&
+                    address.Name2.Contains(criteria.Name2));
+            }
+
+            var requiresPlaceJoin =
+                !string.IsNullOrWhiteSpace(criteria.City) ||
+                !string.IsNullOrWhiteSpace(criteria.Postcode) ||
+                !string.IsNullOrWhiteSpace(criteria.Country) ||
+                criteria.CountryId.HasValue ||
                 criteria.PostcodeId.HasValue ||
-                criteria.CityId.HasValue ||
-                !string.IsNullOrWhiteSpace(criteria.Town))
+                criteria.CityId.HasValue;
+
+            if (requiresPlaceJoin)
             {
                 query =
                     from address in query
@@ -111,7 +120,21 @@ namespace Infrastructure.Persistence.DAC
                         on place.CityId equals city.CityId
                     join country in _context.Set<Country>()
                         on place.CountryId equals country.CountryId
+                    join postcode in _context.Set<Postcode>()
+                        on place.PostcodeId equals postcode.PostcodeId
                     where
+                        (!string.IsNullOrWhiteSpace(criteria.City) &&
+                         city.NameEnGb.Contains(criteria.City) ||
+                         string.IsNullOrWhiteSpace(criteria.City))
+                        &&
+                        (!string.IsNullOrWhiteSpace(criteria.Postcode) &&
+                         postcode.Postcode1.Contains(criteria.Postcode) ||
+                         string.IsNullOrWhiteSpace(criteria.Postcode))
+                        &&
+                        (!string.IsNullOrWhiteSpace(criteria.Country) &&
+                         country.NameEnGb.Contains(criteria.Country) ||
+                         string.IsNullOrWhiteSpace(criteria.Country))
+                        &&
                         (!criteria.CountryId.HasValue ||
                          place.CountryId == criteria.CountryId.Value)
                         &&
@@ -120,10 +143,13 @@ namespace Infrastructure.Persistence.DAC
                         &&
                         (!criteria.CityId.HasValue ||
                          place.CityId == criteria.CityId.Value)
-                        &&
-                        (string.IsNullOrWhiteSpace(criteria.Town) ||
-                         city.NameEnGb.Contains(criteria.Town))
                     select address;
+            }
+
+            if (criteria.PlaceId.HasValue)
+            {
+                query = query.Where(address =>
+                    address.PlaceId == criteria.PlaceId.Value);
             }
 
             var totalCount = await query.CountAsync();
@@ -131,7 +157,11 @@ namespace Infrastructure.Persistence.DAC
             query = ApplySorting(query, criteria);
 
             var pageNumber = Math.Max(1, criteria.PageNumber);
-            var pageSize = Math.Max(1, criteria.PageSize);
+
+            var pageSize = Math.Clamp(
+                criteria.PageSize,
+                1,
+                500);
 
             var entities = await query
                 .Skip((pageNumber - 1) * pageSize)
@@ -145,9 +175,7 @@ namespace Infrastructure.Persistence.DAC
                     .ToList(),
 
                 PageNumber = pageNumber,
-
                 PageSize = pageSize,
-
                 TotalCount = totalCount
             };
         }

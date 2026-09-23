@@ -1,4 +1,6 @@
-﻿namespace Application.Addresses
+﻿using Application.Common;
+
+namespace Application.Addresses
 {
     public interface IAddressService
     {
@@ -15,5 +17,7 @@
         Task<AddressDto> CreateWithPlaceAsync(CreateAddressWithPlaceCommand command);
 
         Task<AddressDto?> UpdateWithPlaceAsync(UpdateAddressWithPlaceCommand command);
+
+        Task<PagedResult<AddressDto>> SearchAsync(AddressSearchCriteria criteria);
     }
 }

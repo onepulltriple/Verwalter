@@ -174,6 +174,25 @@ namespace AnwendungWPF.Clients
             response.EnsureSuccessStatusCode();
         }
 
+        public async Task<IReadOnlyList<AddressModel>> SearchAsync(
+            AddressSearchRequest request)
+        {
+            var response = await _httpClient.PostAsJsonAsync(
+                "api/addresses/search",
+                request);
+
+            response.EnsureSuccessStatusCode();
+
+            var searchResponse =
+                await response.Content.ReadFromJsonAsync<AddressSearchResponse>()
+                ?? throw new InvalidOperationException(
+                    "The API returned an empty address search response.");
+
+            return searchResponse.Items
+                .Select(Map)
+                .ToList();
+        }
+
         private static AddressModel Map(AddressResponse response)
         {
             return new AddressModel

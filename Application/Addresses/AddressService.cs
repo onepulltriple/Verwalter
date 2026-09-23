@@ -1,4 +1,6 @@
-﻿namespace Application.Addresses
+﻿using Application.Common;
+
+namespace Application.Addresses
 {
     public class AddressService : IAddressService
     {
@@ -114,6 +116,12 @@
                     nameof(command));
 
             return await _addressWithPlaceRepository.UpdateAsync(command);
+        }
+
+        public async Task<PagedResult<AddressDto>> SearchAsync(
+            AddressSearchCriteria criteria)
+        {
+            return await _addressRepository.SearchAsync(criteria);
         }
     }
 }

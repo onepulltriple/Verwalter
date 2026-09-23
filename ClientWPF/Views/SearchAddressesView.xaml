@@ -118,11 +118,6 @@
                 <TextBlock Text="Reset"
                            Style="{StaticResource PopUpWindowButtonTextStyle}"/>
             </Button>
-            <!--<TextBlock 
-                   Style="{StaticResource PopUpWindowWarningBodyTextStyle}"
-                   Text="{Binding ErrorMessage}"
-                   d:Text="error messages"
-                   TextWrapping="Wrap"/>-->
         </StackPanel>
 
         <!-- data list -->
@@ -142,25 +137,10 @@
                                     Binding="{Binding AddressLine1}"
                                     Width="*"/>
 
-                <!--<DataGridTextColumn Header="AddressLine2"
-                                    ElementStyle="{StaticResource DefaultDataGridTextStyle}"
-                                    Binding="{Binding AddressLine2}"
-                                    Width="*"/>
-
-                <DataGridTextColumn Header="AddressLine3"
-                                    ElementStyle="{StaticResource DefaultDataGridTextStyle}"
-                                    Binding="{Binding AddressLine3}"
-                                    Width="*"/>-->
-
                 <DataGridTextColumn Header="Name"
                                     ElementStyle="{StaticResource DefaultDataGridTextStyle}"
                                     Binding="{Binding Name1}"
                                     Width="*"/>
-
-                <!--<DataGridTextColumn Header="Name 2"
-                                    ElementStyle="{StaticResource DefaultDataGridTextStyle}"
-                                    Binding="{Binding Name2}"
-                                    Width="*"/>-->
 
                 <DataGridTextColumn Header="City"
                                     ElementStyle="{StaticResource DefaultDataGridTextStyle}"
@@ -176,35 +156,6 @@
                                     ElementStyle="{StaticResource DefaultDataGridTextStyle}"
                                     Binding="{Binding Country}"
                                     Width="*"/>
-
-                <!--<DataGridTemplateColumn Header="Place"
-                                        Width="1.5*">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Style="{StaticResource DefaultDataGridTextStyle}"
-                                           Text="{Binding City}"
-                                           Margin="0,0,-5,0"/>
-
-                                <TextBlock Style="{StaticResource DefaultDataGridTextStyle}"
-                                           Text=","
-                                           Margin="0,0,0,0"/>
-
-                                <TextBlock Style="{StaticResource DefaultDataGridTextStyle}"
-                                           Text="{Binding Postcode}"
-                                           Margin="-4,0,-1,0"/>
-
-                                --><!--<TextBlock Style="{StaticResource DefaultDataGridTextStyle}"
-                                           Text=","
-                                           Margin="0,0,0,0"/>--><!--
-
-                                <TextBlock Style="{StaticResource DefaultDataGridTextStyle}"
-                                           Text="{Binding Country}"
-                                           Margin="-1,0,0,0"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>-->
 
             </DataGrid.Columns>
         </DataGrid>

@@ -1,3 +1,4 @@
+using APIContracts.Addresses;
 using AnwendungWPF.Clients;
 using AnwendungWPF.Models;
 using AnwendungWPF.Utilities;
@@ -9,11 +10,7 @@ namespace AnwendungWPF.ViewModels
     public class SearchAddressesViewModel : ViewModelBase
     {
         private readonly IAddressApiClient _addressApiClient;
-
         private readonly IPlaceApiClient _placeApiClient;
-
-        private IReadOnlyList<AddressModel> _allAddresses =
-            Array.Empty<AddressModel>();
 
         private AddressModel? _selectedAddress;
 
@@ -51,14 +48,13 @@ namespace AnwendungWPF.ViewModels
             }
         }
 
-        public RelayCommand SearchCommand { get; }
+        public AsyncRelayCommand SearchCommand { get; }
 
-        public RelayCommand ShowFullListCommand { get; }
+        public AsyncRelayCommand ShowFullListCommand { get; }
 
         public SearchAddressesViewModel(
-            IAddressApiClient addressApiClient, 
-            IPlaceApiClient placeApiClient
-            )
+            IAddressApiClient addressApiClient,
+            IPlaceApiClient placeApiClient)
         {
             ArgumentNullException.ThrowIfNull(addressApiClient);
             ArgumentNullException.ThrowIfNull(placeApiClient);
@@ -69,137 +65,98 @@ namespace AnwendungWPF.ViewModels
             Editor = new AddressSearchEditorViewModel();
 
             SearchCommand =
-                new RelayCommand(_ => SearchAddresses());
+                new AsyncRelayCommand(_ => SearchAddressesAsync());
 
             ShowFullListCommand =
-                new RelayCommand(_ => ShowFullList());
-            _placeApiClient = placeApiClient;
+                new AsyncRelayCommand(_ => ShowFullListAsync());
         }
 
         public async Task InitialiseAsync()
+        {
+            await SearchAddressesAsync();
+        }
+
+        private async Task SearchAddressesAsync()
         {
             try
             {
                 ErrorMessage = string.Empty;
 
-                _allAddresses = await _addressApiClient.GetAllAsync();
-
-                var places = await _placeApiClient.GetAllAsync();
-
-                var placesById = places.ToDictionary(
-                    place => place.PlaceId);
-
-                foreach (var address in _allAddresses)
+                var request = new AddressSearchRequest
                 {
-                    if (!placesById.TryGetValue(
-                            address.PlaceId,
-                            out var place))
-                    {
-                        continue;
-                    }
+                    AddressLine1 =
+                        GetSearchValue(Editor.AddressLine1),
 
-                    address.City = place.City;
-                    address.Postcode = place.Postcode;
-                    address.Country = place.Country;
-                }
+                    Name1 =
+                        GetSearchValue(Editor.Name1),
 
-                ListOfAddresses.Clear();
+                    City =
+                        GetSearchValue(Editor.CityName),
 
-                foreach (var address in _allAddresses)
-                {
-                    ListOfAddresses.Add(address);
-                }
+                    Country =
+                        GetSearchValue(Editor.CountryName),
+
+                    Postcode =
+                        GetSearchValue(Editor.Postcode),
+
+                    PageNumber = 1,
+                    PageSize = 500
+                };
+
+                var addresses =
+                    await _addressApiClient.SearchAsync(request);
+
+                await DisplayAddressesAsync(addresses);
             }
             catch (Exception)
             {
-                ErrorMessage = "The addresses could not be loaded.";
+                ErrorMessage = "The addresses could not be searched.";
             }
         }
 
-        private void SearchAddresses()
+        private async Task ShowFullListAsync()
         {
-            ErrorMessage = string.Empty;
-
-            IEnumerable<AddressModel> matchingAddresses =
-                _allAddresses;
-
-            if (!string.IsNullOrWhiteSpace(Editor.AddressLine1))
-            {
-                string searchText = Editor.AddressLine1.Trim();
-
-                matchingAddresses = matchingAddresses.Where(address =>
-                    ContainsText(address.AddressLine1, searchText));
-            }
-
-            if (!string.IsNullOrWhiteSpace(Editor.Name1))
-            {
-                string searchText = Editor.Name1.Trim();
-
-                matchingAddresses = matchingAddresses.Where(address =>
-                    ContainsText(address.Name1, searchText));
-            }
-
-            if (!string.IsNullOrWhiteSpace(Editor.CityName))
-            {
-                string searchText = Editor.CityName.Trim();
-
-                matchingAddresses = matchingAddresses.Where(address =>
-                    ContainsText(address.City, searchText));
-            }
-
-            if (!string.IsNullOrWhiteSpace(Editor.CountryName))
-            {
-                string searchText = Editor.CountryName.Trim();
-
-                matchingAddresses = matchingAddresses.Where(address =>
-                    ContainsText(address.Country, searchText));
-            }
-
-            if (!string.IsNullOrWhiteSpace(Editor.Postcode))
-            {
-                string searchText = Editor.Postcode.Trim();
-
-                matchingAddresses = matchingAddresses.Where(address =>
-                    ContainsText(address.Postcode, searchText));
-            }
-
-            ListOfAddresses.Clear();
-
-            foreach (var address in matchingAddresses)
-            {
-                ListOfAddresses.Add(address);
-            }
-
-            SelectedAddress = null;
-        }
-
-        private void ShowFullList()
-        {
-            ErrorMessage = string.Empty;
-
             Editor.AddressLine1 = string.Empty;
             Editor.Name1 = string.Empty;
             Editor.CityName = string.Empty;
             Editor.CountryName = string.Empty;
             Editor.Postcode = string.Empty;
 
+            await SearchAddressesAsync();
+        }
+
+        private async Task DisplayAddressesAsync(
+            IReadOnlyList<AddressModel> addresses)
+        {
+            var places = await _placeApiClient.GetAllAsync();
+
+            var placesById = places.ToDictionary(
+                place => place.PlaceId);
+
             ListOfAddresses.Clear();
 
-            foreach (var address in _allAddresses)
+            foreach (var address in addresses)
             {
+                if (placesById.TryGetValue(
+                        address.PlaceId,
+                        out var place))
+                {
+                    address.City = place.City;
+                    address.Postcode = place.Postcode;
+                    address.Country = place.Country;
+                }
+
                 ListOfAddresses.Add(address);
             }
 
             SelectedAddress = null;
         }
 
-        private static bool ContainsText(
-            string? value,
-            string searchText)
+        private static string? GetSearchValue(string value)
         {
-            return value?.Contains(
-                searchText,
-                StringComparison.OrdinalIgnoreCase) == true;
+            return string.IsNullOrWhiteSpace(value)
+                ? null
+                : value.Trim();
         }
     }
 }

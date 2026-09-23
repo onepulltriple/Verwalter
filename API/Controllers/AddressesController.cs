@@ -156,6 +156,47 @@ namespace API.Controllers
             return NoContent();
         }
 
+        [HttpPost("search")]
+        public async Task<ActionResult<AddressSearchResponse>> Search(
+            AddressSearchRequest request)
+        {
+            var criteria = new AddressSearchCriteria
+            {
+                AddressLine1 = request.AddressLine1,
+                AddressLine2 = request.AddressLine2,
+                AddressLine3 = request.AddressLine3,
+                Name1 = request.Name1,
+                Name2 = request.Name2,
+                City = request.City,
+                Postcode = request.Postcode,
+                Country = request.Country,
+                CountryId = request.CountryId,
+                PostcodeId = request.PostcodeId,
+                CityId = request.CityId,
+                PlaceId = request.PlaceId,
+                PageNumber = request.PageNumber,
+                PageSize = request.PageSize,
+                SortBy = request.SortBy,
+                SortDescending = request.SortDescending
+            };
+
+            var result = await _addressService.SearchAsync(criteria);
+
+            var response = new AddressSearchResponse
+            {
+                Items = result.Items
+                    .Select(Map)
+                    .ToList(),
+
+                PageNumber = result.PageNumber,
+                PageSize = result.PageSize,
+                TotalCount = result.TotalCount,
+                TotalPages = result.TotalPages
+            };
+
+            return Ok(response);
+        }
+
         private static AddressResponse Map(AddressDto address)
         {
             return new AddressResponse

@@ -1,4 +1,5 @@
 ﻿using AnwendungWPF.Models;
+using APIContracts.Addresses;
 
 namespace AnwendungWPF.Clients
 {
@@ -47,5 +48,8 @@ namespace AnwendungWPF.Clients
             string? name2);
 
         Task DeleteAsync(Guid addressId);
+
+        Task<IReadOnlyList<AddressModel>> SearchAsync(
+            AddressSearchRequest request);
     }
 }
