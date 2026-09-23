@@ -36,7 +36,6 @@ namespace AnwendungWPF
                     services.AddTransient<MainWindowViewModel>();
                     services.AddTransient<ManageCountriesViewModel>();
                     services.AddTransient<ManageAddressesViewModel>();
-                    //services.AddTransient<AddressListViewModel>();
 
                     services.AddTransient<AppUserLoginWindow>();
                     services.AddTransient<MainWindow>();

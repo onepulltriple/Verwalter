@@ -159,7 +159,9 @@ namespace AnwendungWPF.ViewModels
 
             ListOfAddresses.Clear();
 
-            foreach (var address in addresses)
+            foreach (var address in addresses
+                .OrderByDescending(a => a.ModifiedUtc)
+                .ThenBy(a => a.PlaceId))
             {
                 var place = places.FirstOrDefault(
                     p => p.PlaceId == address.PlaceId);

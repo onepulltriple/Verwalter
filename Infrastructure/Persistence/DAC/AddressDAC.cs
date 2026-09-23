@@ -22,7 +22,8 @@ namespace Infrastructure.Persistence.DAC
                 AddressLine2 = entity.AddressLine2,
                 AddressLine3 = entity.AddressLine3,
                 Name1 = entity.Name1,
-                Name2 = entity.Name2
+                Name2 = entity.Name2,
+                ModifiedUtc = entity.ModifiedUtc
             };
         }
 
@@ -50,6 +51,7 @@ namespace Infrastructure.Persistence.DAC
             entity.AddressLine3 = dto.AddressLine3;
             entity.Name1 = dto.Name1;
             entity.Name2 = dto.Name2;
+            entity.ModifiedUtc = DateTime.UtcNow;
         }
 
         protected override Guid GetEntityId(AddressDto dto)

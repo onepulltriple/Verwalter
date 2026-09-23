@@ -112,7 +112,8 @@ namespace API.Controllers
                 AddressLine2 = address.AddressLine2,
                 AddressLine3 = address.AddressLine3,
                 Name1 = address.Name1,
-                Name2 = address.Name2
+                Name2 = address.Name2,
+                ModifiedUtc = address.ModifiedUtc,
             };
         }
     }

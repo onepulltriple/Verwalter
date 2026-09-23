@@ -120,8 +120,8 @@ namespace AnwendungWPF.Views
             }
 
             var confirmationMessage =
-                $"The address '{e.Address.Name1}' is not referenced by any " +
-                "AppUsers.\n\n" +
+                //$"The address '{e.Address.Name1}' is not referenced by any " +
+                //"AppUsers.\n\n" +
                 "Are you sure you want to delete this address?";
 
             var result = MessageBox.Show(

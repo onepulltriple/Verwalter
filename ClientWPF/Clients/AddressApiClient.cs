@@ -118,7 +118,11 @@ namespace AnwendungWPF.Clients
                 AddressLine2 = response.AddressLine2,
                 AddressLine3 = response.AddressLine3,
                 Name1 = response.Name1,
-                Name2 = response.Name2
+                Name2 = response.Name2,
+                ModifiedUtc = response.ModifiedUtc,
+                //City = response.City,
+                //Postcode = response.Postcode,
+                //Country = response.Country
             };
         }
     }

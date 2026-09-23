@@ -15,5 +15,7 @@
         public string? Name1 { get; init; }
 
         public string? Name2 { get; init; }
+
+        public DateTime ModifiedUtc { get; init; }
     }
 }

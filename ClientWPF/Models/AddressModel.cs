@@ -21,5 +21,7 @@
         public string Postcode { get; set; } = string.Empty;
 
         public string Country { get; set; } = string.Empty;
+
+        public DateTime ModifiedUtc { get; set; }
     }
 }
