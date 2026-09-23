@@ -5,13 +5,22 @@
     <Compile Update="Views\AppUserLoginView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\EditorViews\AddressEditorView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\EditorViews\CountryEditorView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\ManageAddressesView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\ManageCountriesView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Windows\AppUserLoginWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Windows\ManageAddressesWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Windows\ManageCountriesWindow.xaml.cs">

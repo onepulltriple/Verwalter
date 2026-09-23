@@ -51,7 +51,6 @@
             Name="TB00" 
             Text="{Binding EnteredUsername}"
             KeyDown="TB00KeyDownHandler"
-            Margin="6"
             Style="{StaticResource PopUpWindowTextBoxTextStyle}"
             />
         <TextBlock    

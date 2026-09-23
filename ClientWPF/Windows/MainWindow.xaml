@@ -11,6 +11,9 @@
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_Manage"
                       Style="{StaticResource MainMenuItemStyle}">
+                <MenuItem Header="_Addresses"
+                          Style="{StaticResource MainMenuItemStyle}"
+                          Command="{Binding ManageAddressesCommand}"/>
                 <MenuItem Header="_Countries"
                           Style="{StaticResource MainMenuItemStyle}"
                           Command="{Binding ManageCountriesCommand}"/>

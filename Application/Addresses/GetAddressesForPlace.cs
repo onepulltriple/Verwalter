@@ -17,6 +17,7 @@
                 .Select(x => new AddressDto
                 {
                     AddressId = x.AddressId,
+                    PlaceId = x.PlaceId,
                     AddressLine1 = x.AddressLine1,
                     AddressLine2 = x.AddressLine2,
                     AddressLine3 = x.AddressLine3,

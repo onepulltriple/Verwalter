@@ -11,7 +11,9 @@ namespace AnwendungWPF.Clients
     {
         private readonly HttpClient _httpClient;
 
-        public AddressApiClient(HttpClient httpClient, IOptions<ApiSettings> apiSettings)
+        public AddressApiClient(
+            HttpClient httpClient,
+            IOptions<ApiSettings> apiSettings)
         {
             _httpClient = httpClient;
             _httpClient.BaseAddress =
@@ -30,8 +32,9 @@ namespace AnwendungWPF.Clients
 
         public async Task<IReadOnlyList<AddressModel>> GetAllAsync()
         {
-            var responses = await _httpClient.GetFromJsonAsync<List<AddressResponse>>(
-                "api/addresses")
+            var responses =
+                await _httpClient.GetFromJsonAsync<List<AddressResponse>>(
+                    "api/addresses")
                 ?? [];
 
             return responses
@@ -39,10 +42,68 @@ namespace AnwendungWPF.Clients
                 .ToList();
         }
 
-        public async Task DeleteAsync(Guid id)
+        public async Task<AddressModel> CreateAsync(
+            Guid placeId,
+            string addressLine1,
+            string? addressLine2,
+            string? addressLine3,
+            string? name1,
+            string? name2)
+        {
+            var request = new CreateAddressRequest
+            {
+                PlaceId = placeId,
+                AddressLine1 = addressLine1,
+                AddressLine2 = addressLine2,
+                AddressLine3 = addressLine3,
+                Name1 = name1,
+                Name2 = name2
+            };
+
+            var response = await _httpClient.PostAsJsonAsync(
+                "api/addresses",
+                request);
+
+            response.EnsureSuccessStatusCode();
+
+            var address =
+                await response.Content.ReadFromJsonAsync<AddressResponse>()
+                ?? throw new InvalidOperationException(
+                    "The API returned an empty response when creating an address.");
+
+            return Map(address);
+        }
+
+        public async Task UpdateAsync(
+            Guid addressId,
+            Guid placeId,
+            string addressLine1,
+            string? addressLine2,
+            string? addressLine3,
+            string? name1,
+            string? name2)
+        {
+            var request = new UpdateAddressRequest
+            {
+                PlaceId = placeId,
+                AddressLine1 = addressLine1,
+                AddressLine2 = addressLine2,
+                AddressLine3 = addressLine3,
+                Name1 = name1,
+                Name2 = name2
+            };
+
+            var response = await _httpClient.PutAsJsonAsync(
+                $"api/addresses/{addressId}",
+                request);
+
+            response.EnsureSuccessStatusCode();
+        }
+
+        public async Task DeleteAsync(Guid addressId)
         {
             var response = await _httpClient.DeleteAsync(
-                $"api/addresses/{id}");
+                $"api/addresses/{addressId}");
 
             response.EnsureSuccessStatusCode();
         }

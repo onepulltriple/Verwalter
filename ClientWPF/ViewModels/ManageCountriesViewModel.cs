@@ -35,7 +35,6 @@ namespace AnwendungWPF.ViewModels
 
 
         private string _countryErrorMessage = string.Empty;
-
         public string CountryErrorMessage
         {
             get => _countryErrorMessage;
@@ -45,6 +44,7 @@ namespace AnwendungWPF.ViewModels
                     return;
 
                 _countryErrorMessage = value;
+
                 OnPropertyChanged(nameof(CountryErrorMessage));
                 OnPropertyChanged(nameof(ErrorMessage));
             }

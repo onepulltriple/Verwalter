@@ -34,11 +34,13 @@ namespace AnwendungWPF
                     services.AddTransient<AppUserLoginViewModel>();
                     services.AddTransient<MainWindowViewModel>();
                     services.AddTransient<ManageCountriesViewModel>();
-                    services.AddTransient<AddressListViewModel>();
+                    services.AddTransient<ManageAddressesViewModel>();
+                    //services.AddTransient<AddressListViewModel>();
 
                     services.AddTransient<AppUserLoginWindow>();
                     services.AddTransient<MainWindow>();
                     services.AddTransient<ManageCountriesWindow>();
+                    services.AddTransient<ManageAddressesWindow>();
 
 
                 })
@@ -46,7 +48,7 @@ namespace AnwendungWPF
 
             _host.Start();
 
-            var mainWindow = _host.Services.GetRequiredService<AppUserLoginWindow>();
+            var mainWindow = _host.Services.GetRequiredService<MainWindow>();
             mainWindow.Show();
         }
 

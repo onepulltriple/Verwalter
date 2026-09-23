@@ -19,6 +19,7 @@ namespace AnwendungWPF.ViewModels
 
         #region menu commands
         public ICommand ManageCountriesCommand { get; }
+        public ICommand ManageAddressesCommand { get; }
 
         public ICommand ExitCommand { get; }
         #endregion
@@ -32,6 +33,9 @@ namespace AnwendungWPF.ViewModels
 
             ManageCountriesCommand =
                 new RelayCommand(ManageCountries);
+
+            ManageAddressesCommand =
+                new RelayCommand(ManageAddresses);
 
             ExitCommand =
                 new RelayCommand(Exit);
@@ -55,6 +59,12 @@ namespace AnwendungWPF.ViewModels
         private void ManageCountries()
         {
             var window = _serviceProvider.GetRequiredService<ManageCountriesWindow>();
+            window.ShowDialog();
+        }
+
+        private void ManageAddresses()
+        {
+            var window = _serviceProvider.GetRequiredService<ManageAddressesWindow>();
             window.ShowDialog();
         }
 
