@@ -13,5 +13,7 @@
         Task<bool> DeleteAsync(Guid addressId);
 
         Task<AddressDto> CreateWithPlaceAsync(CreateAddressWithPlaceCommand command);
+
+        Task<AddressDto?> UpdateWithPlaceAsync(UpdateAddressWithPlaceCommand command);
     }
 }

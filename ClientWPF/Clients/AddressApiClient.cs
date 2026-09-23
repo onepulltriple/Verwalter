@@ -144,6 +144,36 @@ namespace AnwendungWPF.Clients
             return Map(address);
         }
 
+        public async Task UpdateWithPlaceAsync(
+            Guid addressId,
+            string countryName,
+            string postcode,
+            string cityName,
+            string addressLine1,
+            string? addressLine2,
+            string? addressLine3,
+            string? name1,
+            string? name2)
+        {
+            var request = new UpdateAddressWithPlaceRequest
+            {
+                CountryName = countryName,
+                Postcode = postcode,
+                CityName = cityName,
+                AddressLine1 = addressLine1,
+                AddressLine2 = addressLine2,
+                AddressLine3 = addressLine3,
+                Name1 = name1,
+                Name2 = name2
+            };
+
+            var response = await _httpClient.PutAsJsonAsync(
+                $"api/addresses/{addressId}/with-place",
+                request);
+
+            response.EnsureSuccessStatusCode();
+        }
+
         private static AddressModel Map(AddressResponse response)
         {
             return new AddressModel

@@ -28,6 +28,7 @@ namespace AnwendungWPF.ViewModels.EditorViewModels
                 OnPropertyChanged(nameof(CityName));
                 OnPropertyChanged(nameof(CountryName));
                 OnPropertyChanged(nameof(Postcode));
+                OnPropertyChanged(nameof(PlaceDetailsChanged));
 
                 OnPropertyChanged(nameof(IsEditing));
 
@@ -157,6 +158,7 @@ namespace AnwendungWPF.ViewModels.EditorViewModels
                 WorkingCopyAddress.CityName = value;
 
                 OnPropertyChanged(nameof(CityName));
+                OnPropertyChanged(nameof(PlaceDetailsChanged));
 
                 Validate();
             }
@@ -176,6 +178,7 @@ namespace AnwendungWPF.ViewModels.EditorViewModels
                 WorkingCopyAddress.CountryName = value;
 
                 OnPropertyChanged(nameof(CountryName));
+                OnPropertyChanged(nameof(PlaceDetailsChanged));
 
                 Validate();
             }
@@ -195,6 +198,7 @@ namespace AnwendungWPF.ViewModels.EditorViewModels
                 WorkingCopyAddress.Postcode = value;
 
                 OnPropertyChanged(nameof(Postcode));
+                OnPropertyChanged(nameof(PlaceDetailsChanged));
 
                 Validate();
             }
@@ -280,6 +284,10 @@ namespace AnwendungWPF.ViewModels.EditorViewModels
 
         public void BeginEdit(AddressModel address)
         {
+            _originalCityName = address.City;
+            _originalCountryName = address.Country;
+            _originalPostcode = address.Postcode;
+
             WorkingCopyAddress = new AddressModel
             {
                 AddressId = address.AddressId,
@@ -301,6 +309,11 @@ namespace AnwendungWPF.ViewModels.EditorViewModels
         public void Cancel()
         {
             WorkingCopyAddress = null;
+
+            _originalCityName = string.Empty;
+            _originalCountryName = string.Empty;
+            _originalPostcode = string.Empty;
+
             ErrorMessage = string.Empty;
             IsValid = false;
         }
@@ -320,6 +333,34 @@ namespace AnwendungWPF.ViewModels.EditorViewModels
             OnPropertyChanged(nameof(CountryName));
 
             Validate();
+        }
+
+        private string _originalCityName = string.Empty;
+
+        private string _originalCountryName = string.Empty;
+
+        private string _originalPostcode = string.Empty;
+
+        public bool PlaceDetailsChanged
+        {
+            get
+            {
+                if (WorkingCopyAddress is null)
+                    return false;
+
+                return !string.Equals(
+                           WorkingCopyAddress.CityName,
+                           _originalCityName,
+                           StringComparison.OrdinalIgnoreCase)
+                    || !string.Equals(
+                           WorkingCopyAddress.CountryName,
+                           _originalCountryName,
+                           StringComparison.OrdinalIgnoreCase)
+                    || !string.Equals(
+                           WorkingCopyAddress.Postcode,
+                           _originalPostcode,
+                           StringComparison.OrdinalIgnoreCase);
+            }
         }
     }
 }

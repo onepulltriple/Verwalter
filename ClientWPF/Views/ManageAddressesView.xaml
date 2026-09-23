@@ -110,7 +110,7 @@
 
                                 <TextBlock Style="{StaticResource DefaultDataGridTextStyle}"
                                            Text="{Binding Postcode}"
-                                           Margin="0"/>
+                                           Margin="-4,0,-1,0"/>
 
                                 <!--<TextBlock Style="{StaticResource DefaultDataGridTextStyle}"
                                            Text=","
@@ -167,7 +167,8 @@
             <editorviews:AddressEditorView Grid.Column="0"
                                            DataContext="{Binding Editor}"/>
 
-            <StackPanel Grid.Column="1">
+            <StackPanel Grid.Column="1"
+                        Visibility="Collapsed">
                 <TextBlock Style="{StaticResource PopUpWindowBodyTextStyle}"
                            Text="Place:"
                            Margin="6,20,6,6"/>
@@ -188,10 +189,10 @@
                                            Margin="1,0,0,0"/>
 
                                 <TextBlock Text="{Binding Postcode}"
-                                           Margin="0,0,0,0"/>
+                                           Margin="-1,0,0,0"/>
 
                                 <TextBlock Text=" "
-                                           Margin="1,0,0,0"/>
+                                           Margin="0,0,0,0"/>
 
                                 <TextBlock Text="{Binding Country}"/>
                             </StackPanel>

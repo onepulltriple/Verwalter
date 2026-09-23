@@ -35,6 +35,17 @@ namespace AnwendungWPF.Clients
             string? name1,
             string? name2);
 
+        Task UpdateWithPlaceAsync(
+            Guid addressId,
+            string countryName,
+            string postcode,
+            string cityName,
+            string addressLine1,
+            string? addressLine2,
+            string? addressLine3,
+            string? name1,
+            string? name2);
+
         Task DeleteAsync(Guid addressId);
     }
 }

@@ -229,10 +229,27 @@ namespace AnwendungWPF.ViewModels
 
             var address = Editor.WorkingCopyAddress;
 
+            if (address is null || !Editor.IsValid)
+                return;
+
             if (address.AddressId == Guid.Empty &&
                 address.PlaceId == Guid.Empty)
             {
                 await _addressApiClient.CreateWithPlaceAsync(
+                    address.CountryName,
+                    address.Postcode,
+                    address.CityName,
+                    address.AddressLine1,
+                    address.AddressLine2,
+                    address.AddressLine3,
+                    address.Name1,
+                    address.Name2);
+            }
+            else if (address.AddressId != Guid.Empty &&
+                     Editor.PlaceDetailsChanged)
+            {
+                await _addressApiClient.UpdateWithPlaceAsync(
+                    address.AddressId,
                     address.CountryName,
                     address.Postcode,
                     address.CityName,

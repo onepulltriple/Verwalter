@@ -114,6 +114,35 @@ namespace API.Controllers
             return NoContent();
         }
 
+        [HttpPut("{id:guid}/with-place")]
+        public async Task<ActionResult<AddressResponse>> UpdateWithPlace(
+            Guid id,
+            UpdateAddressWithPlaceRequest request)
+        {
+            var command = new UpdateAddressWithPlaceCommand
+            {
+                AddressId = id,
+                CountryName = request.CountryName,
+                Postcode = request.Postcode,
+                CityName = request.CityName,
+                AddressLine1 = request.AddressLine1,
+                AddressLine2 = request.AddressLine2,
+                AddressLine3 = request.AddressLine3,
+                Name1 = request.Name1,
+                Name2 = request.Name2
+            };
+
+            var updated =
+                await _addressService.UpdateWithPlaceAsync(command);
+
+            if (updated is null)
+            {
+                return NotFound();
+            }
+
+            return Ok(Map(updated));
+        }
+
         [HttpDelete("{id:guid}")]
         public async Task<IActionResult> Delete(Guid id)
         {

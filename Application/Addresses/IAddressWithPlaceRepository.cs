@@ -4,5 +4,8 @@ namespace Application.Addresses
     {
         Task<AddressDto> CreateAsync(
             CreateAddressWithPlaceCommand command);
+
+        Task<AddressDto?> UpdateAsync(
+            UpdateAddressWithPlaceCommand command);
     }
 }

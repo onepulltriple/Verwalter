@@ -84,5 +84,36 @@
 
             return await _addressWithPlaceRepository.CreateAsync(command);
         }
+
+        public async Task<AddressDto?> UpdateWithPlaceAsync(
+            UpdateAddressWithPlaceCommand command)
+        {
+            if (command.AddressId == Guid.Empty)
+                throw new ArgumentException(
+                    "Address ID is required.",
+                    nameof(command));
+
+            if (string.IsNullOrWhiteSpace(command.CountryName))
+                throw new ArgumentException(
+                    "Country name is required.",
+                    nameof(command));
+
+            if (string.IsNullOrWhiteSpace(command.Postcode))
+                throw new ArgumentException(
+                    "Postcode is required.",
+                    nameof(command));
+
+            if (string.IsNullOrWhiteSpace(command.CityName))
+                throw new ArgumentException(
+                    "City name is required.",
+                    nameof(command));
+
+            if (string.IsNullOrWhiteSpace(command.AddressLine1))
+                throw new ArgumentException(
+                    "Address line 1 is required.",
+                    nameof(command));
+
+            return await _addressWithPlaceRepository.UpdateAsync(command);
+        }
     }
 }
