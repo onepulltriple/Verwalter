@@ -1,4 +1,4 @@
-﻿using APIContracts.Addresses;
+﻿using ApiContracts.Addresses;
 using Application.Addresses;
 using Microsoft.AspNetCore.Mvc;
 

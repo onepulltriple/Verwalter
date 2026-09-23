@@ -1,4 +1,4 @@
-﻿namespace APIContracts.Addresses
+﻿namespace ApiContracts.Addresses
 {
     public sealed class AddressResponse
     {

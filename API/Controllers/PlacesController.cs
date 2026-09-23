@@ -1,4 +1,4 @@
-using APIContracts.Places;
+using ApiContracts.Places;
 using Application.Places;
 using Microsoft.AspNetCore.Mvc;
 

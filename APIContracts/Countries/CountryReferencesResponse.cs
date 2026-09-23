@@ -1,4 +1,4 @@
-﻿namespace APIContracts.Countries
+﻿namespace ApiContracts.Countries
 {
     public sealed class CountryReferencesResponse
     {

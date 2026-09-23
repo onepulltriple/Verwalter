@@ -1,5 +1,5 @@
 using AnwendungWPF.Configuration;
-using APIContracts.Places;
+using ApiContracts.Places;
 using AnwendungWPF.Models;
 using Microsoft.Extensions.Options;
 using System.Net.Http;

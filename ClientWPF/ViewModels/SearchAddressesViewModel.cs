@@ -1,4 +1,4 @@
-using APIContracts.Addresses;
+using ApiContracts.Addresses;
 using AnwendungWPF.Clients;
 using AnwendungWPF.Models;
 using AnwendungWPF.Utilities;

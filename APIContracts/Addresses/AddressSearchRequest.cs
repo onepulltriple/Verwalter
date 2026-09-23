@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace APIContracts.Addresses
+namespace ApiContracts.Addresses
 {
     public sealed class AddressSearchRequest
     {

@@ -1,4 +1,4 @@
-namespace APIContracts.Places
+namespace ApiContracts.Places
 {
     public sealed class UpdatePlaceRequest
     {

@@ -1,6 +1,6 @@
 ﻿using AnwendungWPF.Configuration;
 using AnwendungWPF.Models;
-using APIContracts.Addresses;
+using ApiContracts.Addresses;
 using Microsoft.Extensions.Options;
 using System.Net.Http;
 using System.Net.Http.Json;

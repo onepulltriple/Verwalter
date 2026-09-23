@@ -1,5 +1,5 @@
 ﻿using AnwendungWPF.Models;
-using APIContracts.Addresses;
+using ApiContracts.Addresses;
 
 namespace AnwendungWPF.Clients
 {
