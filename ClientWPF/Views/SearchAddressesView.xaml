@@ -7,6 +7,7 @@
              xmlns:editorviews="clr-namespace:AnwendungWPF.Views.EditorViews"
              xmlns:local="clr-namespace:AnwendungWPF.Views"
              mc:Ignorable="d" 
+             Background="{StaticResource DefaultBackgroundBrush}"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Margin="6">
         <Grid.RowDefinitions>
@@ -49,6 +50,11 @@
                 <TextBlock Text="Search"
                            Style="{StaticResource PopUpWindowButtonTextStyle}"/>
             </Button>
+            <TextBlock 
+                   Style="{StaticResource PopUpWindowWarningBodyTextStyle}"
+                   Text="{Binding ErrorMessage}"
+                   d:Text="error messages"
+                   TextWrapping="Wrap"/>
         </StackPanel>
 
         <!--search area-->
@@ -101,32 +107,23 @@
 
         </Grid>
 
-
-        <Grid Grid.Row="2"
-              Grid.Column="0">
-            <StackPanel Orientation="Horizontal">
-                <Button Style="{StaticResource CrudPrimaryButtonStyle}"
-                        Command="{Binding EditCommand}">
-                    <TextBlock Text="Edit"
-                       Style="{StaticResource PopUpWindowButtonTextStyle}"
-                       />
-                </Button>
-                <Button Style="{StaticResource CrudSecondaryButtonStyle}"
-                        Command="{Binding DeleteCommand}">
-                    <TextBlock Text="Delete"
-                       Style="{StaticResource PopUpWindowButtonTextStyle}"
-                       />
-                </Button>
-            </StackPanel>
-        </Grid>
-
-        <!-- error message -->
-        <TextBlock Grid.Row="2"
-                   Grid.Column="1"
+        <StackPanel Grid.Row="2"
+                    Grid.Column="1"
+                    Orientation="Horizontal"
+                    FlowDirection="RightToLeft"
+                    VerticalAlignment="Bottom">
+            <Button 
+                    Style="{StaticResource CrudSecondaryButtonStyle}"
+                    Command="{Binding ShowFullListCommand}">
+                <TextBlock Text="Reset"
+                           Style="{StaticResource PopUpWindowButtonTextStyle}"/>
+            </Button>
+            <!--<TextBlock 
                    Style="{StaticResource PopUpWindowWarningBodyTextStyle}"
                    Text="{Binding ErrorMessage}"
                    d:Text="error messages"
-                   TextWrapping="Wrap"/>
+                   TextWrapping="Wrap"/>-->
+        </StackPanel>
 
         <!-- data list -->
         <DataGrid Grid.Row="3"
@@ -140,12 +137,12 @@
                   SelectedItem="{Binding SelectedAddress, Mode=TwoWay}"
                   >
             <DataGrid.Columns>
-                <DataGridTextColumn Header="AddressLine1"
+                <DataGridTextColumn Header="Street"
                                     ElementStyle="{StaticResource DefaultDataGridTextStyle}"
                                     Binding="{Binding AddressLine1}"
                                     Width="*"/>
 
-                <DataGridTextColumn Header="AddressLine2"
+                <!--<DataGridTextColumn Header="AddressLine2"
                                     ElementStyle="{StaticResource DefaultDataGridTextStyle}"
                                     Binding="{Binding AddressLine2}"
                                     Width="*"/>
@@ -153,17 +150,17 @@
                 <DataGridTextColumn Header="AddressLine3"
                                     ElementStyle="{StaticResource DefaultDataGridTextStyle}"
                                     Binding="{Binding AddressLine3}"
-                                    Width="*"/>
+                                    Width="*"/>-->
 
-                <DataGridTextColumn Header="Name 1"
+                <DataGridTextColumn Header="Name"
                                     ElementStyle="{StaticResource DefaultDataGridTextStyle}"
                                     Binding="{Binding Name1}"
                                     Width="*"/>
 
-                <DataGridTextColumn Header="Name 2"
+                <!--<DataGridTextColumn Header="Name 2"
                                     ElementStyle="{StaticResource DefaultDataGridTextStyle}"
                                     Binding="{Binding Name2}"
-                                    Width="*"/>
+                                    Width="*"/>-->
 
                 <DataGridTemplateColumn Header="Place"
                                         Width="1.5*">
@@ -198,7 +195,7 @@
         </DataGrid>
         
 
-        <Grid Grid.Row="4"
+        <!--<Grid Grid.Row="4"
               Grid.Column="1">
             <StackPanel Orientation="Horizontal"
                         FlowDirection="RightToLeft">
@@ -215,7 +212,7 @@
                        />
                 </Button>
             </StackPanel>
-        </Grid>
+        </Grid>-->
 
     </Grid>
 </UserControl>

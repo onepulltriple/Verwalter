@@ -51,6 +51,8 @@ namespace AnwendungWPF.ViewModels
 
         public RelayCommand SearchCommand { get; }
 
+        public RelayCommand ShowFullListCommand { get; }
+
         public SearchAddressesViewModel(IAddressApiClient addressApiClient)
         {
             ArgumentNullException.ThrowIfNull(addressApiClient);
@@ -61,6 +63,9 @@ namespace AnwendungWPF.ViewModels
 
             SearchCommand =
                 new RelayCommand(_ => SearchAddresses());
+
+            ShowFullListCommand =
+                new RelayCommand(_ => ShowFullList());
         }
 
         public async Task InitialiseAsync()
@@ -88,16 +93,47 @@ namespace AnwendungWPF.ViewModels
         {
             ErrorMessage = string.Empty;
 
-            string searchText = Editor.AddressLine1.Trim();
+            IEnumerable<AddressModel> matchingAddresses =
+                _allAddresses;
 
-            IEnumerable<AddressModel> matchingAddresses = _allAddresses;
-
-            if (!string.IsNullOrWhiteSpace(searchText))
+            if (!string.IsNullOrWhiteSpace(Editor.AddressLine1))
             {
-                matchingAddresses = _allAddresses.Where(address =>
-                    address.AddressLine1.Contains(
-                        searchText,
-                        StringComparison.OrdinalIgnoreCase));
+                string searchText = Editor.AddressLine1.Trim();
+
+                matchingAddresses = matchingAddresses.Where(address =>
+                    ContainsText(address.AddressLine1, searchText));
+            }
+
+            if (!string.IsNullOrWhiteSpace(Editor.Name1))
+            {
+                string searchText = Editor.Name1.Trim();
+
+                matchingAddresses = matchingAddresses.Where(address =>
+                    ContainsText(address.Name1, searchText));
+            }
+
+            if (!string.IsNullOrWhiteSpace(Editor.CityName))
+            {
+                string searchText = Editor.CityName.Trim();
+
+                matchingAddresses = matchingAddresses.Where(address =>
+                    ContainsText(address.City, searchText));
+            }
+
+            if (!string.IsNullOrWhiteSpace(Editor.CountryName))
+            {
+                string searchText = Editor.CountryName.Trim();
+
+                matchingAddresses = matchingAddresses.Where(address =>
+                    ContainsText(address.Country, searchText));
+            }
+
+            if (!string.IsNullOrWhiteSpace(Editor.Postcode))
+            {
+                string searchText = Editor.Postcode.Trim();
+
+                matchingAddresses = matchingAddresses.Where(address =>
+                    ContainsText(address.Postcode, searchText));
             }
 
             ListOfAddresses.Clear();
@@ -108,6 +144,35 @@ namespace AnwendungWPF.ViewModels
             }
 
             SelectedAddress = null;
+        }
+
+        private void ShowFullList()
+        {
+            ErrorMessage = string.Empty;
+
+            Editor.AddressLine1 = string.Empty;
+            Editor.Name1 = string.Empty;
+            Editor.CityName = string.Empty;
+            Editor.CountryName = string.Empty;
+            Editor.Postcode = string.Empty;
+
+            ListOfAddresses.Clear();
+
+            foreach (var address in _allAddresses)
+            {
+                ListOfAddresses.Add(address);
+            }
+
+            SelectedAddress = null;
+        }
+
+        private static bool ContainsText(
+            string? value,
+            string searchText)
+        {
+            return value?.Contains(
+                searchText,
+                StringComparison.OrdinalIgnoreCase) == true;
         }
     }
 }
