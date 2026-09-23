@@ -204,42 +204,42 @@ BEGIN TRY
         @AustriaId,
         @ViennaPostcodeId,
         @ViennaCityId,
-        N'Vienna 1010'
+        N'Vienna, 1010 Austria'
     ),
     (
         @InnsbruckPlaceId,
         @AustriaId,
         @InnsbruckPostcodeId,
         @InnsbruckCityId,
-        N'Innsbruck 6020'
+        N'Innsbruck, 6020 Austria'
     ),
     (
         @HamburgPlaceId,
         @GermanyId,
         @HamburgPostcodeId,
         @HamburgCityId,
-        N'Hamburg 20095'
+        N'Hamburg, 20095 Germany'
     ),
     (
         @KemptenPlaceId,
         @GermanyId,
         @KemptenPostcodeId,
         @KemptenCityId,
-        N'Kempten 87435'
+        N'Kempten, 87435 Germany'
     ),
     (
         @BerlinPlaceId,
         @GermanyId,
         @BerlinPostcodeId,
         @BerlinCityId,
-        N'Berlin 10115'
+        N'Berlin, 10115 Germany'
     ),
     (
         @MunichPlaceId,
         @GermanyId,
         @MunichPostcodeId,
         @MunichCityId,
-        N'Munich 80331'
+        N'Munich, 80331 Germany'
     );
 
 

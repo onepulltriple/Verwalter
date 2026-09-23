@@ -88,10 +88,23 @@ namespace Infrastructure.Persistence.DAC
                     PlaceId = Guid.NewGuid(),
                     CountryId = country.CountryId,
                     PostcodeId = postcode.PostcodeId,
-                    CityId = city.CityId
+                    CityId = city.CityId,
+                    NameEnGb = CreatePlaceName(
+                        cityName,
+                        postcodeValue,
+                        countryName)
                 };
 
                 await _context.Places.AddAsync(place);
+                await _context.SaveChangesAsync();
+            }
+            else if (string.IsNullOrWhiteSpace(place.NameEnGb))
+            {
+                place.NameEnGb = CreatePlaceName(
+                    cityName,
+                    postcodeValue,
+                    countryName);
+
                 await _context.SaveChangesAsync();
             }
 
@@ -206,10 +219,23 @@ namespace Infrastructure.Persistence.DAC
                     PlaceId = Guid.NewGuid(),
                     CountryId = country.CountryId,
                     PostcodeId = postcode.PostcodeId,
-                    CityId = city.CityId
+                    CityId = city.CityId,
+                    NameEnGb = CreatePlaceName(
+                        cityName,
+                        postcodeValue,
+                        countryName)
                 };
 
                 await _context.Places.AddAsync(place);
+                await _context.SaveChangesAsync();
+            }
+            else if (string.IsNullOrWhiteSpace(place.NameEnGb))
+            {
+                place.NameEnGb = CreatePlaceName(
+                    cityName,
+                    postcodeValue,
+                    countryName);
+
                 await _context.SaveChangesAsync();
             }
 
@@ -288,6 +314,14 @@ namespace Infrastructure.Persistence.DAC
             return string.IsNullOrWhiteSpace(value)
                 ? null
                 : value.Trim();
+        }
+
+        private static string CreatePlaceName(
+            string cityName,
+            string postcode,
+            string countryName)
+        {
+            return $"{cityName}, {postcode} {countryName}";
         }
     }
 }
