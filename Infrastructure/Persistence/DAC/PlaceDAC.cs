@@ -20,7 +20,10 @@ namespace Infrastructure.Persistence.DAC
                 CountryId = entity.CountryId,
                 PostcodeId = entity.PostcodeId,
                 CityId = entity.CityId,
-                NameEnGb = entity.NameEnGb
+                NameEnGb = entity.NameEnGb,
+                City = entity.City?.NameEnGb ?? string.Empty,
+                Postcode = entity.Postcode?.Postcode1 ?? string.Empty,
+                Country = entity.City?.Country?.NameEnGb ?? string.Empty
             };
         }
 
@@ -51,11 +54,30 @@ namespace Infrastructure.Persistence.DAC
             return dto.PlaceId;
         }
 
+        public override async Task<List<PlaceDto>> GetAllAsync()
+        {
+            var entities = await QueryPlaces()
+                .ToListAsync();
+
+            return entities
+                .Select(MapToDto)
+                .ToList();
+        }
+
+        public override async Task<PlaceDto?> GetByIdAsync(Guid id)
+        {
+            var entity = await QueryPlaces()
+                .SingleOrDefaultAsync(x => x.PlaceId == id);
+
+            return entity is null
+                ? null
+                : MapToDto(entity);
+        }
+
         public async Task<List<PlaceDto>> GetByPostcodeIdAsync(
             Guid postcodeId)
         {
-            var entities = await _context.Set<Place>()
-                .AsNoTracking()
+            var entities = await QueryPlaces()
                 .Where(x => x.PostcodeId == postcodeId)
                 .ToListAsync();
 
@@ -67,8 +89,7 @@ namespace Infrastructure.Persistence.DAC
         public async Task<List<PlaceDto>> GetByCityIdAsync(
             Guid cityId)
         {
-            var entities = await _context.Set<Place>()
-                .AsNoTracking()
+            var entities = await QueryPlaces()
                 .Where(x => x.CityId == cityId)
                 .ToListAsync();
 
@@ -81,8 +102,7 @@ namespace Infrastructure.Persistence.DAC
             Guid postcodeId,
             Guid cityId)
         {
-            var entities = await _context.Set<Place>()
-                .AsNoTracking()
+            var entities = await QueryPlaces()
                 .Where(x =>
                     x.PostcodeId == postcodeId &&
                     x.CityId == cityId)
@@ -91,6 +111,15 @@ namespace Infrastructure.Persistence.DAC
             return entities
                 .Select(MapToDto)
                 .ToList();
+        }
+
+        private IQueryable<Place> QueryPlaces()
+        {
+            return _context.Set<Place>()
+                .AsNoTracking()
+                .Include(x => x.City)
+                    .ThenInclude(x => x.Country)
+                .Include(x => x.Postcode);
         }
     }
 }

@@ -100,17 +100,25 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding City}"/>
+                                <TextBlock Style="{StaticResource DefaultDataGridTextStyle}"
+                                           Text="{Binding City}"
+                                           Margin="0,0,-5,0"/>
 
-                                <TextBlock Text=", "
-                                           Margin="2,0,0,0"/>
+                                <TextBlock Style="{StaticResource DefaultDataGridTextStyle}"
+                                           Text=","
+                                           Margin="0,0,0,0"/>
 
-                                <TextBlock Text="{Binding Postcode}"/>
+                                <TextBlock Style="{StaticResource DefaultDataGridTextStyle}"
+                                           Text="{Binding Postcode}"
+                                           Margin="0"/>
 
-                                <TextBlock Text=", "
-                                           Margin="2,0,0,0"/>
+                                <!--<TextBlock Style="{StaticResource DefaultDataGridTextStyle}"
+                                           Text=","
+                                           Margin="0,0,0,0"/>-->
 
-                                <TextBlock Text="{Binding Country}"/>
+                                <TextBlock Style="{StaticResource DefaultDataGridTextStyle}"
+                                           Text="{Binding Country}"
+                                           Margin="-1,0,0,0"/>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -139,11 +147,11 @@
 
         <!-- error message -->
         <TextBlock Grid.Row="2"
-                    Grid.Column="1"
-                    Style="{StaticResource PopUpWindowWarningBodyTextStyle}"
-                    Text="{Binding ErrorMessage}"
-                    d:Text="error messages"
-                    TextWrapping="Wrap"/>
+                   Grid.Column="1"
+                   Style="{StaticResource PopUpWindowWarningBodyTextStyle}"
+                   Text="{Binding ErrorMessage}"
+                   d:Text="error messages"
+                   TextWrapping="Wrap"/>
 
 
         <Grid Grid.Row="3"
@@ -168,6 +176,7 @@
                           SelectedValue="{Binding SelectedPlaceId,
                                         Mode=TwoWay,
                                         UpdateSourceTrigger=PropertyChanged}"
+                          IsEnabled="{Binding Editor.IsEditing}"
                           Style="{StaticResource PopUpWindowComboBoxStyle}">
 
                     <ComboBox.ItemTemplate>
@@ -176,12 +185,13 @@
                                 <TextBlock Text="{Binding City}"/>
 
                                 <TextBlock Text=", "
-                                           Margin="2,0,0,0"/>
+                                           Margin="1,0,0,0"/>
 
-                                <TextBlock Text="{Binding Postcode}"/>
+                                <TextBlock Text="{Binding Postcode}"
+                                           Margin="0,0,0,0"/>
 
-                                <TextBlock Text=", "
-                                           Margin="2,0,0,0"/>
+                                <TextBlock Text=" "
+                                           Margin="1,0,0,0"/>
 
                                 <TextBlock Text="{Binding Country}"/>
                             </StackPanel>

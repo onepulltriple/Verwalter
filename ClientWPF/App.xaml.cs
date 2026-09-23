@@ -27,6 +27,7 @@ namespace AnwendungWPF
 
                     services.AddHttpClient<IAddressApiClient, AddressApiClient>();
                     services.AddHttpClient<ICountryApiClient, CountryApiClient>();
+                    services.AddHttpClient<IPlaceApiClient, PlaceApiClient>();
                     services.AddHttpClient<IAppUserApiClient, AppUserApiClient>();
 
 

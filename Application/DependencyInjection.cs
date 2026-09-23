@@ -16,6 +16,7 @@ namespace Application
         {
             services.AddScoped<IAddressService, AddressService>();
             services.AddScoped<ICountryService, CountryService>();
+            services.AddScoped<IPlaceService, PlaceService>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
 
             return services;

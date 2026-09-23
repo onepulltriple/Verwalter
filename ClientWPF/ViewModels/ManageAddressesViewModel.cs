@@ -9,9 +9,9 @@ namespace AnwendungWPF.ViewModels
     public class ManageAddressesViewModel : ViewModelBase
     {
         private readonly IAddressApiClient _addressApiClient;
+        private readonly IPlaceApiClient _placeApiClient;
 
         public ObservableCollection<AddressModel> ListOfAddresses { get; } = new();
-
         public ObservableCollection<PlacePickerItem> PlacePickerItems { get; } = new();
 
         private AddressModel? _selectedAddress;
@@ -97,10 +97,12 @@ namespace AnwendungWPF.ViewModels
 
         public event EventHandler<DeleteAddressConfirmationEventArguments>? DeleteAddressConfirmationRequested;
 
-        public ManageAddressesViewModel(IAddressApiClient addressApiClient)
+        public ManageAddressesViewModel(IAddressApiClient addressApiClient, IPlaceApiClient placeApiClient)
         {
             ArgumentNullException.ThrowIfNull(addressApiClient);
             _addressApiClient = addressApiClient;
+            ArgumentNullException.ThrowIfNull(placeApiClient);
+            _placeApiClient = placeApiClient;
 
             Editor = new AddressEditorViewModel();
 
@@ -135,13 +137,40 @@ namespace AnwendungWPF.ViewModels
 
         public async Task InitialiseAsync()
         {
+            var places = await _placeApiClient.GetAllAsync();
+
+            PlacePickerItems.Clear();
+
+            foreach (var place in places
+                .OrderBy(p => p.City)
+                .ThenBy(p => p.Postcode)
+                .ThenBy(p => p.Country))
+            {
+                PlacePickerItems.Add(new PlacePickerItem
+                {
+                    Id = place.PlaceId,
+                    City = place.City,
+                    Postcode = place.Postcode,
+                    Country = place.Country
+                });
+            }
+
             var addresses = await _addressApiClient.GetAllAsync();
 
             ListOfAddresses.Clear();
 
-            foreach (AddressModel address in addresses)
+            foreach (var address in addresses)
             {
-                ApplyPlaceDetails(address);
+                var place = places.FirstOrDefault(
+                    p => p.PlaceId == address.PlaceId);
+
+                if (place is not null)
+                {
+                    address.City = place.City;
+                    address.Postcode = place.Postcode;
+                    address.Country = place.Country;
+                }
+
                 ListOfAddresses.Add(address);
             }
         }
