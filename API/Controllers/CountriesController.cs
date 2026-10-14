@@ -1,5 +1,6 @@
 ﻿using ApiContracts.Countries;
-using Application.Countries;
+using Application.Countries.Models;
+using Application.Countries.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers

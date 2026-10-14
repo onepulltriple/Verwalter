@@ -1,7 +1,9 @@
 ﻿using Infrastructure.Persistence.Entities;
 using Microsoft.EntityFrameworkCore;
-using Application.Addresses;
 using Application.Common;
+using Application.Addresses.Repositories;
+using Application.Addresses.Queries;
+using Application.Addresses.Models;
 
 namespace Infrastructure.Persistence.DAC
 {
@@ -60,7 +62,7 @@ namespace Infrastructure.Persistence.DAC
         }
 
         public async Task<PagedResult<AddressDto>> SearchAsync(
-            AddressSearchCriteria criteria)
+            AddressSearchCriteriaQuery criteria)
         {
             IQueryable<Address> query = _context.Set<Address>()
                 .AsNoTracking();
@@ -195,7 +197,7 @@ namespace Infrastructure.Persistence.DAC
 
         private static IQueryable<Address> ApplySorting(
             IQueryable<Address> query,
-            AddressSearchCriteria criteria)
+            AddressSearchCriteriaQuery criteria)
         {
             if (string.Equals(
                     criteria.SortBy,

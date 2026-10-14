@@ -1,4 +1,4 @@
-﻿using Application.Authentication;
+﻿using Application.Authentication.Repositories;
 using Infrastructure.Persistence.Entities;
 using Microsoft.EntityFrameworkCore;
 

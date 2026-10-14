@@ -1,5 +1,8 @@
 ﻿using ApiContracts.Addresses;
-using Application.Addresses;
+using Application.Addresses.Commands;
+using Application.Addresses.Queries;
+using Application.Addresses.Services;
+using Application.Addresses.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -160,7 +163,7 @@ namespace API.Controllers
         public async Task<ActionResult<AddressSearchResponse>> Search(
             AddressSearchRequest request)
         {
-            var criteria = new AddressSearchCriteria
+            var criteria = new AddressSearchCriteriaQuery
             {
                 AddressLine1 = request.AddressLine1,
                 AddressLine2 = request.AddressLine2,

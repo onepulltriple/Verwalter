@@ -1,9 +1,9 @@
 ﻿using Application.AddressCategories;
-using Application.Addresses;
-using Application.Authentication;
+using Application.Addresses.Services;
+using Application.Authentication.Services;
 using Application.Cities;
-using Application.Countries;
-using Application.Places;
+using Application.Countries.Services;
+using Application.Places.Services;
 using Application.Postcodes;
 using Microsoft.Extensions.DependencyInjection;
 

@@ -1,4 +1,6 @@
-using Application.Addresses;
+using Application.Addresses.Commands;
+using Application.Addresses.Models;
+using Application.Addresses.Repositories;
 using Infrastructure.Persistence.Entities;
 using Microsoft.EntityFrameworkCore;
 

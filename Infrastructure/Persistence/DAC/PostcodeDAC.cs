@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Application.Postcodes;
 using Infrastructure.Persistence.Entities;
+using Application.Postcodes.Repositories;
+using Application.Postcodes.Models;
 
 namespace Infrastructure.Persistence.DAC
 {

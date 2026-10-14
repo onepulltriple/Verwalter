@@ -31,11 +31,11 @@ namespace AnwendungWPF.Clients
             if (!response.IsSuccessStatusCode)
             {
                 // Try to read API result if present to capture error message
-                var maybe = await response.Content.ReadFromJsonAsync<ApiContracts.Authentication.AuthenticationResult>();
+                var maybe = await response.Content.ReadFromJsonAsync<ApiContracts.Authentication.AuthenticationResponse>();
                 return (false, maybe?.ErrorMessage ?? $"HTTP {(int)response.StatusCode}", null, null);
             }
 
-            var result = await response.Content.ReadFromJsonAsync<ApiContracts.Authentication.AuthenticationResult>();
+            var result = await response.Content.ReadFromJsonAsync<ApiContracts.Authentication.AuthenticationResponse>();
             if (result is null)
             {
                 return (false, "Empty response from server", null, null);

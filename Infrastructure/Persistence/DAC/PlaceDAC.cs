@@ -1,4 +1,5 @@
-﻿using Application.Places;
+﻿using Application.Places.Models;
+using Application.Places.Repositories;
 using Infrastructure.Persistence.Entities;
 using Microsoft.EntityFrameworkCore;
 

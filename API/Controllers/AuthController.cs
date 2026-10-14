@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ApiContracts.Authentication;
-using Application.Authentication;
+using Application.Authentication.Services;
 
 namespace API.Controllers
 {
@@ -33,7 +33,7 @@ namespace API.Controllers
             var appResult = await _authenticationService.LoginAsync(appRequest);
 
             // Map application result to API contract
-            var apiResult = new ApiContracts.Authentication.AuthenticationResult
+            var apiResult = new ApiContracts.Authentication.AuthenticationResponse
             {
                 Success = appResult.Success,
                 ErrorMessage = appResult.ErrorMessage,

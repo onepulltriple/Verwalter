@@ -1,14 +1,14 @@
-﻿using Application.AddressCategories;
-using Application.Addresses;
-using Application.Cities;
-using Application.Countries;
-using Application.Places;
-using Application.Postcodes;
-using Application.Authentication;
-using Infrastructure.Persistence.DAC;
+﻿using Infrastructure.Persistence.DAC;
 using Infrastructure.Persistence.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Application.Addresses.Repositories;
+using Application.AddressCategories.Repositories;
+using Application.Authentication.Repositories;
+using Application.Cities.Repositories;
+using Application.Countries.Repositories;
+using Application.Places.Repositories;
+using Application.Postcodes.Repositories;
 
 namespace Infrastructure
 {

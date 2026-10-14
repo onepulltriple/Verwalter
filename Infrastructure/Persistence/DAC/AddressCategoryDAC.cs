@@ -1,4 +1,5 @@
-﻿using Application.AddressCategories;
+﻿using Application.AddressCategories.Models;
+using Application.AddressCategories.Repositories;
 using Infrastructure.Persistence.Entities;
 using Microsoft.EntityFrameworkCore;
 

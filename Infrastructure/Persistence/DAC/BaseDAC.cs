@@ -1,6 +1,6 @@
 ﻿using Infrastructure.Persistence.Entities;
 using Microsoft.EntityFrameworkCore;
-using Application.Common;
+using Application.Common.Repositories;
 
 namespace Infrastructure.Persistence.DAC
 {
