@@ -18,7 +18,14 @@ namespace API.Controllers
             _addressService = addressService;
         }
 
+        /// <summary>
+        /// Returns all addresses.
+        /// </summary>
+        /// <response code="200">The addresses were returned successfully.</response>
         [HttpGet]
+        [ProducesResponseType(
+            StatusCodes.Status200OK,
+            Type = typeof(IReadOnlyList<AddressResponse>))]
         public async Task<ActionResult<IReadOnlyList<AddressResponse>>> GetAll()
         {
             var addresses = await _addressService.GetAllAsync();
@@ -30,7 +37,17 @@ namespace API.Controllers
             return Ok(response);
         }
 
+        /// <summary>
+        /// Returns one address by its identifier.
+        /// </summary>
+        /// <param name="id">The unique identifier of the address.</param>
+        /// <response code="200">The address was found and returned.</response>
+        /// <response code="404">No address exists with the specified identifier.</response>
         [HttpGet("{id:guid}")]
+        [ProducesResponseType(
+            StatusCodes.Status200OK,
+            Type = typeof(AddressResponse))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<AddressResponse>> GetById(Guid id)
         {
             var address = await _addressService.GetByIdAsync(id);
@@ -43,7 +60,19 @@ namespace API.Controllers
             return Ok(Map(address));
         }
 
+        /// <summary>
+        /// Creates an address using an existing place.
+        /// </summary>
+        /// <param name="request">
+        /// The place identifier and address fields to create.
+        /// </param>
+        /// <response code="201">The address was created successfully.</response>
+        /// <response code="400">The request was invalid.</response>
         [HttpPost]
+        [ProducesResponseType(
+            StatusCodes.Status201Created,
+            Type = typeof(AddressResponse))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<AddressResponse>> Create(
             CreateAddressRequest request)
         {
