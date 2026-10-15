@@ -1,4 +1,4 @@
-# Address Management System
+# Verwalter: An Address Management System
 
 A full-stack address management application built with .NET, ASP.NET Core Web API, and WPF. This project explores REST API development, relational database design, and clean architecture in a maintainable client/server application.
 
