@@ -1,13 +1,58 @@
-# Verwalter
+# Address Management System
 
-Verwalter is a client/server application for managing addresses. The solution contains:
+A full-stack address management application built with .NET, ASP.NET Core Web API, and WPF. This project explores REST API development, relational database design, and clean architecture in a maintainable client/server application.
 
-- A WPF client application using MVVM architecture.
-- An ASP.NET Core API.
-- An API Contracts library project.
-- An Application layer containing server-side operations.
-- An Infrastructure layer containing Entity Framework Core persistence.
-- A SQL Server database.
+### Features
+
+- Create, edit, and view addresses and related entities.
+- Search and filter addresses by criteria such as street, city, and country.
+- Paginate address lists to support larger datasets.
+- Manage related entities, including countries, cities, places, postcodes, and address categories.
+- Basic authentication functionality.
+- WPF desktop interface following the MVVM pattern.
+
+### Technology Stack
+
+- **WPF / XAML**              — Desktop UI and styling
+- **ASP.NET Core Web API**    — REST API
+- **C# / .NET**               — Application development
+- **Entity Framework Core**   — Database access and persistence
+- **SQL database**            — Data storage
+
+### Architecture
+
+The solution is split into projects with clearly defined responsibilities:
+
+```text
+- ClientWPF        # Desktop UI and view models
+- APIContracts     # API request and response models
+- API              # HTTP endpoints and controllers
+- Application      # Application services and interfaces
+- Infrastructure   # Database entities and persistence
+```
+
+The application separates API contracts, application logic, and persistence models to reduce coupling and make individual components easier to maintain, test, or replace.
+
+The database model represents addresses and related entities separately, with an emphasis on normalisation and meaningful relationships.
+
+### Project Motivation
+
+This is a personal learning and portfolio project focused on writing clear, maintainable code and building a foundation that can be extended with additional functionality. The project provides hands-on experience with:
+
+- Designing and implementing REST APIs.
+- Integrating a desktop client with a backend service.
+- Relational data modelling and Entity Framework Core.
+- Separation of concerns and dependency inversion.
+- Search, filtering, and pagination.
+- MVVM and automated testing.
+
+### Future Improvements
+
+- Expand unit and integration test coverage.
+- Improve validation and error handling.
+- Extend authentication and authorisation.
+- Add API documentation and further search capabilities.
+
 
 ## Installation and setup
 
