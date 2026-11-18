@@ -8,7 +8,7 @@ namespace Infrastructure.Persistence.DAC
     public class CountryDAC
         : BaseDAC<Country, CountryDto>, ICountryRepository
     {
-        public CountryDAC(AddressDatabaseContext context)
+        public CountryDAC(VerwalterContext context)
             : base(context)
         {
         }
@@ -54,13 +54,7 @@ namespace Infrastructure.Persistence.DAC
 
         public async Task<bool> HasReferencesAsync(Guid countryId)
         {
-            if (await _context.Cities
-                .AnyAsync(c => c.CountryId == countryId))
-            {
-                return true;
-            }
-
-            return await _context.Postcodes
+            return await _context.Places
                 .AnyAsync(p => p.CountryId == countryId);
         }
     }

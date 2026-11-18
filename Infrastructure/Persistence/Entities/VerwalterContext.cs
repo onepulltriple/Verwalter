@@ -4,13 +4,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence.Entities;
 
-public partial class AddressDatabaseContext : DbContext
+public partial class VerwalterContext : DbContext
 {
-    public AddressDatabaseContext()
+    public VerwalterContext()
     {
     }
 
-    public AddressDatabaseContext(DbContextOptions<AddressDatabaseContext> options)
+    public VerwalterContext(DbContextOptions<VerwalterContext> options)
         : base(options)
     {
     }
@@ -39,17 +39,13 @@ public partial class AddressDatabaseContext : DbContext
 
     public virtual DbSet<AppUserCategory> AppUserCategories { get; set; }
 
-    public virtual DbSet<City> Cities { get; set; }
-
     public virtual DbSet<Country> Countries { get; set; }
 
     public virtual DbSet<Place> Places { get; set; }
 
-    public virtual DbSet<Postcode> Postcodes { get; set; }
-
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=AddressDatabase;Integrated Security=True;TrustServerCertificate=True");
+        => optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=Verwalter;Integrated Security=True;TrustServerCertificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -297,30 +293,6 @@ public partial class AddressDatabaseContext : DbContext
                 .IsConcurrencyToken();
         });
 
-        modelBuilder.Entity<City>(entity =>
-        {
-            entity.HasKey(e => e.CityId).IsClustered(false);
-
-            entity.ToTable("City", "address");
-
-            entity.HasIndex(e => e.CountryId, "CX_City_Country").IsClustered();
-
-            entity.HasIndex(e => new { e.CountryId, e.CityId }, "UQ_City_Country_City").IsUnique();
-
-            entity.Property(e => e.CityId).HasDefaultValueSql("(newsequentialid())");
-            entity.Property(e => e.CreatedUtc).HasDefaultValueSql("(sysutcdatetime())");
-            entity.Property(e => e.ModifiedUtc).HasDefaultValueSql("(sysutcdatetime())");
-            entity.Property(e => e.NameEnGb).HasMaxLength(100);
-            entity.Property(e => e.RowVersion)
-                .IsRowVersion()
-                .IsConcurrencyToken();
-
-            entity.HasOne(d => d.Country).WithMany(p => p.Cities)
-                .HasForeignKey(d => d.CountryId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_City_Country");
-        });
-
         modelBuilder.Entity<Country>(entity =>
         {
             entity.ToTable("Country", "address");
@@ -357,57 +329,24 @@ public partial class AddressDatabaseContext : DbContext
 
             entity.ToTable("Place", "address");
 
-            entity.HasIndex(e => e.PostcodeId, "CX_Place_PostcodeId").IsClustered();
-
-            entity.HasIndex(e => new { e.CountryId, e.PostcodeId, e.CityId }, "UQ_Place_Country_Postcode_City").IsUnique();
+            entity.HasIndex(e => new { e.CountryId, e.CityNameEnGb, e.Postcode }, "UQ_Place_Country_City_Postcode")
+                .IsUnique()
+                .IsClustered();
 
             entity.Property(e => e.PlaceId).HasDefaultValueSql("(newsequentialid())");
+            entity.Property(e => e.CityNameEnGb).HasMaxLength(100);
             entity.Property(e => e.CreatedUtc).HasDefaultValueSql("(sysutcdatetime())");
             entity.Property(e => e.ModifiedUtc).HasDefaultValueSql("(sysutcdatetime())");
             entity.Property(e => e.NameEnGb).HasMaxLength(100);
+            entity.Property(e => e.Postcode).HasMaxLength(50);
             entity.Property(e => e.RowVersion)
                 .IsRowVersion()
                 .IsConcurrencyToken();
 
-            entity.HasOne(d => d.City).WithMany(p => p.Places)
-                .HasPrincipalKey(p => new { p.CountryId, p.CityId })
-                .HasForeignKey(d => new { d.CountryId, d.CityId })
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Place_City");
-
-            entity.HasOne(d => d.Postcode).WithMany(p => p.Places)
-                .HasPrincipalKey(p => new { p.CountryId, p.PostcodeId })
-                .HasForeignKey(d => new { d.CountryId, d.PostcodeId })
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Place_Postcode");
-        });
-
-        modelBuilder.Entity<Postcode>(entity =>
-        {
-            entity.HasKey(e => e.PostcodeId).IsClustered(false);
-
-            entity.ToTable("Postcode", "address");
-
-            entity.HasIndex(e => e.CountryId, "CX_Postcode_Country").IsClustered();
-
-            entity.HasIndex(e => new { e.CountryId, e.Postcode1 }, "UQ_Postcode_Country_Postcode").IsUnique();
-
-            entity.HasIndex(e => new { e.CountryId, e.PostcodeId }, "UQ_Postcode_Country_PostcodeId").IsUnique();
-
-            entity.Property(e => e.PostcodeId).HasDefaultValueSql("(newsequentialid())");
-            entity.Property(e => e.CreatedUtc).HasDefaultValueSql("(sysutcdatetime())");
-            entity.Property(e => e.ModifiedUtc).HasDefaultValueSql("(sysutcdatetime())");
-            entity.Property(e => e.Postcode1)
-                .HasMaxLength(50)
-                .HasColumnName("Postcode");
-            entity.Property(e => e.RowVersion)
-                .IsRowVersion()
-                .IsConcurrencyToken();
-
-            entity.HasOne(d => d.Country).WithMany(p => p.Postcodes)
+            entity.HasOne(d => d.Country).WithMany(p => p.Places)
                 .HasForeignKey(d => d.CountryId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Postcode_Country");
+                .HasConstraintName("FK_Place_Country");
         });
 
         OnModelCreatingPartial(modelBuilder);

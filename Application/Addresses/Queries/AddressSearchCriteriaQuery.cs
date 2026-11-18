@@ -20,10 +20,6 @@
 
         public Guid? CountryId { get; init; }
 
-        public Guid? PostcodeId { get; init; }
-
-        public Guid? CityId { get; init; }
-
         public Guid? PlaceId { get; init; }
 
         public int PageNumber { get; init; } = 1;

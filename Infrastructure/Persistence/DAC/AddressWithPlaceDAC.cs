@@ -9,9 +9,9 @@ namespace Infrastructure.Persistence.DAC
     public sealed class AddressWithPlaceDAC
         : IAddressWithPlaceRepository
     {
-        private readonly AddressDatabaseContext _context;
+        private readonly VerwalterContext _context;
 
-        public AddressWithPlaceDAC(AddressDatabaseContext context)
+        public AddressWithPlaceDAC(VerwalterContext context)
         {
             _context = context;
         }
@@ -43,45 +43,10 @@ namespace Infrastructure.Persistence.DAC
                 await _context.SaveChangesAsync();
             }
 
-            var postcode = await FindPostcodeAsync(
+            var place = await FindPlaceAsync(
                 country.CountryId,
+                cityName,
                 postcodeValue);
-
-            if (postcode is null)
-            {
-                postcode = new Postcode
-                {
-                    PostcodeId = Guid.NewGuid(),
-                    CountryId = country.CountryId,
-                    Postcode1 = postcodeValue
-                };
-
-                await _context.Postcodes.AddAsync(postcode);
-                await _context.SaveChangesAsync();
-            }
-
-            var city = await FindCityAsync(
-                country.CountryId,
-                cityName);
-
-            if (city is null)
-            {
-                city = new City
-                {
-                    CityId = Guid.NewGuid(),
-                    CountryId = country.CountryId,
-                    NameEnGb = cityName
-                };
-
-                await _context.Cities.AddAsync(city);
-                await _context.SaveChangesAsync();
-            }
-
-            var place = await _context.Places
-                .SingleOrDefaultAsync(x =>
-                    x.CountryId == country.CountryId &&
-                    x.PostcodeId == postcode.PostcodeId &&
-                    x.CityId == city.CityId);
 
             if (place is null)
             {
@@ -89,8 +54,8 @@ namespace Infrastructure.Persistence.DAC
                 {
                     PlaceId = Guid.NewGuid(),
                     CountryId = country.CountryId,
-                    PostcodeId = postcode.PostcodeId,
-                    CityId = city.CityId,
+                    CityNameEnGb = cityName,
+                    Postcode = postcodeValue,
                     NameEnGb = CreatePlaceName(
                         cityName,
                         postcodeValue,
@@ -174,45 +139,10 @@ namespace Infrastructure.Persistence.DAC
                 await _context.SaveChangesAsync();
             }
 
-            var postcode = await FindPostcodeAsync(
+            var place = await FindPlaceAsync(
                 country.CountryId,
+                cityName,
                 postcodeValue);
-
-            if (postcode is null)
-            {
-                postcode = new Postcode
-                {
-                    PostcodeId = Guid.NewGuid(),
-                    CountryId = country.CountryId,
-                    Postcode1 = postcodeValue
-                };
-
-                await _context.Postcodes.AddAsync(postcode);
-                await _context.SaveChangesAsync();
-            }
-
-            var city = await FindCityAsync(
-                country.CountryId,
-                cityName);
-
-            if (city is null)
-            {
-                city = new City
-                {
-                    CityId = Guid.NewGuid(),
-                    CountryId = country.CountryId,
-                    NameEnGb = cityName
-                };
-
-                await _context.Cities.AddAsync(city);
-                await _context.SaveChangesAsync();
-            }
-
-            var place = await _context.Places
-                .SingleOrDefaultAsync(x =>
-                    x.CountryId == country.CountryId &&
-                    x.PostcodeId == postcode.PostcodeId &&
-                    x.CityId == city.CityId);
 
             if (place is null)
             {
@@ -220,8 +150,8 @@ namespace Infrastructure.Persistence.DAC
                 {
                     PlaceId = Guid.NewGuid(),
                     CountryId = country.CountryId,
-                    PostcodeId = postcode.PostcodeId,
-                    CityId = city.CityId,
+                    CityNameEnGb = cityName,
+                    Postcode = postcodeValue,
                     NameEnGb = CreatePlaceName(
                         cityName,
                         postcodeValue,
@@ -278,36 +208,25 @@ namespace Infrastructure.Persistence.DAC
                     countryName,
                     StringComparison.OrdinalIgnoreCase));
         }
-
-        private async Task<Postcode?> FindPostcodeAsync(
+        
+        private async Task<Place?> FindPlaceAsync(
             Guid countryId,
+            string cityName,
             string postcode)
         {
-            var postcodes = await _context.Postcodes
+            var places = await _context.Places
                 .AsTracking()
                 .Where(x => x.CountryId == countryId)
                 .ToListAsync();
 
-            return postcodes.FirstOrDefault(existingPostcode =>
+            return places.FirstOrDefault(place =>
                 string.Equals(
-                    existingPostcode.Postcode1.Trim(),
-                    postcode,
-                    StringComparison.OrdinalIgnoreCase));
-        }
-
-        private async Task<City?> FindCityAsync(
-            Guid countryId,
-            string cityName)
-        {
-            var cities = await _context.Cities
-                .AsTracking()
-                .Where(x => x.CountryId == countryId)
-                .ToListAsync();
-
-            return cities.FirstOrDefault(city =>
-                string.Equals(
-                    city.NameEnGb.Trim(),
+                    place.CityNameEnGb.Trim(),
                     cityName,
+                    StringComparison.OrdinalIgnoreCase) &&
+                string.Equals(
+                    place.Postcode.Trim(),
+                    postcode,
                     StringComparison.OrdinalIgnoreCase));
         }
 

@@ -9,9 +9,9 @@ public partial class Place
 
     public Guid CountryId { get; set; }
 
-    public Guid PostcodeId { get; set; }
+    public string CityNameEnGb { get; set; } = null!;
 
-    public Guid CityId { get; set; }
+    public string Postcode { get; set; } = null!;
 
     public string? NameEnGb { get; set; }
 
@@ -23,7 +23,5 @@ public partial class Place
 
     public virtual ICollection<Address> Addresses { get; set; } = new List<Address>();
 
-    public virtual City City { get; set; } = null!;
-
-    public virtual Postcode Postcode { get; set; } = null!;
+    public virtual Country Country { get; set; } = null!;
 }

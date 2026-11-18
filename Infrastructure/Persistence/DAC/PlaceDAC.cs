@@ -8,7 +8,7 @@ namespace Infrastructure.Persistence.DAC
     public class PlaceDAC
         : BaseDAC<Place, PlaceDto>, IPlaceRepository
     {
-        public PlaceDAC(AddressDatabaseContext context)
+        public PlaceDAC(VerwalterContext context)
             : base(context)
         {
         }
@@ -19,12 +19,10 @@ namespace Infrastructure.Persistence.DAC
             {
                 PlaceId = entity.PlaceId,
                 CountryId = entity.CountryId,
-                PostcodeId = entity.PostcodeId,
-                CityId = entity.CityId,
                 NameEnGb = entity.NameEnGb,
-                City = entity.City?.NameEnGb ?? string.Empty,
-                Postcode = entity.Postcode?.Postcode1 ?? string.Empty,
-                Country = entity.City?.Country?.NameEnGb ?? string.Empty
+                City = entity.CityNameEnGb,
+                Postcode = entity.Postcode,
+                Country = entity.Country?.NameEnGb ?? string.Empty
             };
         }
 
@@ -34,8 +32,8 @@ namespace Infrastructure.Persistence.DAC
             {
                 PlaceId = dto.PlaceId,
                 CountryId = dto.CountryId,
-                PostcodeId = dto.PostcodeId,
-                CityId = dto.CityId,
+                CityNameEnGb = dto.City,
+                Postcode = dto.Postcode,
                 NameEnGb = dto.NameEnGb
             };
         }
@@ -45,8 +43,8 @@ namespace Infrastructure.Persistence.DAC
             PlaceDto dto)
         {
             entity.CountryId = dto.CountryId;
-            entity.PostcodeId = dto.PostcodeId;
-            entity.CityId = dto.CityId;
+            entity.CityNameEnGb = dto.City;
+            entity.Postcode = dto.Postcode;
             entity.NameEnGb = dto.NameEnGb;
         }
 
@@ -75,52 +73,11 @@ namespace Infrastructure.Persistence.DAC
                 : MapToDto(entity);
         }
 
-        public async Task<List<PlaceDto>> GetByPostcodeIdAsync(
-            Guid postcodeId)
-        {
-            var entities = await QueryPlaces()
-                .Where(x => x.PostcodeId == postcodeId)
-                .ToListAsync();
-
-            return entities
-                .Select(MapToDto)
-                .ToList();
-        }
-
-        public async Task<List<PlaceDto>> GetByCityIdAsync(
-            Guid cityId)
-        {
-            var entities = await QueryPlaces()
-                .Where(x => x.CityId == cityId)
-                .ToListAsync();
-
-            return entities
-                .Select(MapToDto)
-                .ToList();
-        }
-
-        public async Task<List<PlaceDto>> GetByPostcodeAndCityAsync(
-            Guid postcodeId,
-            Guid cityId)
-        {
-            var entities = await QueryPlaces()
-                .Where(x =>
-                    x.PostcodeId == postcodeId &&
-                    x.CityId == cityId)
-                .ToListAsync();
-
-            return entities
-                .Select(MapToDto)
-                .ToList();
-        }
-
         private IQueryable<Place> QueryPlaces()
         {
             return _context.Set<Place>()
                 .AsNoTracking()
-                .Include(x => x.City)
-                    .ThenInclude(x => x.Country)
-                .Include(x => x.Postcode);
+                .Include(x => x.Country);
         }
     }
 }

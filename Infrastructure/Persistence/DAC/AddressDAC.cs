@@ -9,7 +9,7 @@ namespace Infrastructure.Persistence.DAC
 {
     public class AddressDAC : BaseDAC<Address, AddressDto>, IAddressRepository
     {
-        public AddressDAC(AddressDatabaseContext context)
+        public AddressDAC(VerwalterContext context)
             : base(context)
         {
         }
@@ -108,9 +108,7 @@ namespace Infrastructure.Persistence.DAC
                 !string.IsNullOrWhiteSpace(criteria.City) ||
                 !string.IsNullOrWhiteSpace(criteria.Postcode) ||
                 !string.IsNullOrWhiteSpace(criteria.Country) ||
-                criteria.CountryId.HasValue ||
-                criteria.PostcodeId.HasValue ||
-                criteria.CityId.HasValue;
+                criteria.CountryId.HasValue;
 
             if (requiresPlaceJoin)
             {
@@ -118,33 +116,28 @@ namespace Infrastructure.Persistence.DAC
                     from address in query
                     join place in _context.Set<Place>()
                         on address.PlaceId equals place.PlaceId
-                    join city in _context.Set<City>()
-                        on place.CityId equals city.CityId
                     join country in _context.Set<Country>()
                         on place.CountryId equals country.CountryId
-                    join postcode in _context.Set<Postcode>()
-                        on place.PostcodeId equals postcode.PostcodeId
                     where
-                        (!string.IsNullOrWhiteSpace(criteria.City) &&
-                         city.NameEnGb.Contains(criteria.City) ||
-                         string.IsNullOrWhiteSpace(criteria.City))
-                        &&
-                        (!string.IsNullOrWhiteSpace(criteria.Postcode) &&
-                         postcode.Postcode1.Contains(criteria.Postcode) ||
-                         string.IsNullOrWhiteSpace(criteria.Postcode))
-                        &&
-                        (!string.IsNullOrWhiteSpace(criteria.Country) &&
-                         country.NameEnGb.Contains(criteria.Country) ||
-                         string.IsNullOrWhiteSpace(criteria.Country))
-                        &&
-                        (!criteria.CountryId.HasValue ||
-                         place.CountryId == criteria.CountryId.Value)
-                        &&
-                        (!criteria.PostcodeId.HasValue ||
-                         place.PostcodeId == criteria.PostcodeId.Value)
-                        &&
-                        (!criteria.CityId.HasValue ||
-                         place.CityId == criteria.CityId.Value)
+                    (
+                        string.IsNullOrWhiteSpace(criteria.City) ||
+                        place.CityNameEnGb.Contains(criteria.City)
+                    )
+                    &&
+                    (
+                        string.IsNullOrWhiteSpace(criteria.Postcode) ||
+                        place.Postcode.Contains(criteria.Postcode)
+                    )
+                    &&
+                    (
+                        string.IsNullOrWhiteSpace(criteria.Country) ||
+                        country.NameEnGb.Contains(criteria.Country)
+                    )
+                    &&
+                    (
+                        !criteria.CountryId.HasValue ||
+                        place.CountryId == criteria.CountryId.Value
+                    )
                     select address;
             }
 

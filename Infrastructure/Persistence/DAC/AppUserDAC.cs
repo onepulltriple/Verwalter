@@ -6,9 +6,9 @@ namespace Infrastructure.Persistence.DAC
 {
     public sealed class AppUserDAC : IAppUserRepository
     {
-        private readonly AddressDatabaseContext _context;
+        private readonly VerwalterContext _context;
 
-        public AppUserDAC(AddressDatabaseContext context)
+        public AppUserDAC(VerwalterContext context)
         {
             _context = context
                 ?? throw new ArgumentNullException(nameof(context));

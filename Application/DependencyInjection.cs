@@ -1,10 +1,8 @@
 ﻿using Application.AddressCategories;
 using Application.Addresses.Services;
 using Application.Authentication.Services;
-using Application.Cities;
 using Application.Countries.Services;
 using Application.Places.Services;
-using Application.Postcodes;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Application

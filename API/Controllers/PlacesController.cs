@@ -49,8 +49,8 @@ namespace API.Controllers
             {
                 PlaceId = Guid.NewGuid(),
                 CountryId = request.CountryId,
-                PostcodeId = request.PostcodeId,
-                CityId = request.CityId,
+                City = request.City,
+                Postcode = request.Postcode,
                 NameEnGb = request.NameEnGb
             };
 
@@ -71,8 +71,8 @@ namespace API.Controllers
             {
                 PlaceId = id,
                 CountryId = request.CountryId,
-                PostcodeId = request.PostcodeId,
-                CityId = request.CityId,
+                City = request.City,
+                Postcode = request.Postcode,
                 NameEnGb = request.NameEnGb
             };
 
@@ -105,8 +105,6 @@ namespace API.Controllers
             {
                 PlaceId = place.PlaceId,
                 CountryId = place.CountryId,
-                PostcodeId = place.PostcodeId,
-                CityId = place.CityId,
                 NameEnGb = place.NameEnGb,
                 City = place.City,
                 Postcode = place.Postcode,

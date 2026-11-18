@@ -203,8 +203,6 @@ namespace API.Controllers
                 Postcode = request.Postcode,
                 Country = request.Country,
                 CountryId = request.CountryId,
-                PostcodeId = request.PostcodeId,
-                CityId = request.CityId,
                 PlaceId = request.PlaceId,
                 PageNumber = request.PageNumber,
                 PageSize = request.PageSize,

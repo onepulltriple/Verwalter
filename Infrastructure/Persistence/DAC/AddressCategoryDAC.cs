@@ -9,7 +9,7 @@ namespace Infrastructure.Persistence.DAC
         : BaseDAC<AddressCategory, AddressCategoryDto>,
           IAddressCategoryRepository
     {
-        public AddressCategoryDAC(AddressDatabaseContext context)
+        public AddressCategoryDAC(VerwalterContext context)
             : base(context)
         {
         }

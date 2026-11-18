@@ -8,9 +8,9 @@ namespace Infrastructure.Persistence.DAC
         where TEntity : class
         where TDto : class
     {
-        protected readonly AddressDatabaseContext _context;
+        protected readonly VerwalterContext _context;
 
-        protected BaseDAC(AddressDatabaseContext context)
+        protected BaseDAC(VerwalterContext context)
         {
             _context = context;
         }

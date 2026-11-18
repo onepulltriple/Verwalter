@@ -8,7 +8,7 @@ namespace Verwalter.Infrastructure.Tests
     public class AddressDbContextTests
     {
         [Test]
-        public void AddInfrastructure_RegistersAddressDatabaseContext()
+        public void AddInfrastructure_RegistersVerwalterContext()
         {
             // Arrange
             var services = new ServiceCollection();
@@ -17,7 +17,7 @@ namespace Verwalter.Infrastructure.Tests
             using var provider = services.BuildServiceProvider();
 
             // Act
-            var context = provider.GetService<AddressDatabaseContext>();
+            var context = provider.GetService<VerwalterContext>();
 
             // Assert
             // should work even if no SQL server instance is running
@@ -25,7 +25,7 @@ namespace Verwalter.Infrastructure.Tests
         }
 
         [Test]
-        public async Task AddressDatabaseContext_CanConnectToDatabase()
+        public async Task VerwalterContext_CanConnectToDatabase()
         {
             // Arrange
             var services = new ServiceCollection();
@@ -33,7 +33,7 @@ namespace Verwalter.Infrastructure.Tests
 
             await using var provider = services.BuildServiceProvider();
             await using var context =
-                provider.GetRequiredService<AddressDatabaseContext>();
+                provider.GetRequiredService<VerwalterContext>();
 
             // Act
             var canConnect = await context.Database.CanConnectAsync();

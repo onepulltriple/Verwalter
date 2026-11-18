@@ -24,7 +24,7 @@ namespace API
                     {
                         Title = "Verwalter API",
                         Version = "v1",
-                        Description = "API for managing countries, postcodes, cities, places, and addresses."
+                        Description = "API for managing countries, places, and addresses."
                     });
 
                 var apiXmlFileName =
