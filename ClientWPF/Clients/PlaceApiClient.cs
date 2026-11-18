@@ -45,15 +45,15 @@ namespace AnwendungWPF.Clients
 
         public async Task<PlaceModel> CreateAsync(
             Guid countryId,
-            Guid postcodeId,
-            Guid cityId,
+            string city,
+            string postcode,
             string? nameEnGb)
         {
             var request = new CreatePlaceRequest
             {
                 CountryId = countryId,
-                PostcodeId = postcodeId,
-                CityId = cityId,
+                City = city,
+                Postcode = postcode,
                 NameEnGb = nameEnGb
             };
 
@@ -74,15 +74,15 @@ namespace AnwendungWPF.Clients
         public async Task UpdateAsync(
             Guid placeId,
             Guid countryId,
-            Guid postcodeId,
-            Guid cityId,
+            string city,
+            string postcode,
             string? nameEnGb)
         {
             var request = new UpdatePlaceRequest
             {
                 CountryId = countryId,
-                PostcodeId = postcodeId,
-                CityId = cityId,
+                City = city,
+                Postcode = postcode,
                 NameEnGb = nameEnGb
             };
 
@@ -107,8 +107,6 @@ namespace AnwendungWPF.Clients
             {
                 PlaceId = response.PlaceId,
                 CountryId = response.CountryId,
-                PostcodeId = response.PostcodeId,
-                CityId = response.CityId,
                 NameEnGb = response.NameEnGb,
                 City = response.City,
                 Postcode = response.Postcode,

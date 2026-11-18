@@ -10,15 +10,15 @@ namespace AnwendungWPF.Clients
 
         Task<PlaceModel> CreateAsync(
             Guid countryId,
-            Guid postcodeId,
-            Guid cityId,
+            string city,
+            string postcode,
             string? nameEnGb);
 
         Task UpdateAsync(
             Guid placeId,
             Guid countryId,
-            Guid postcodeId,
-            Guid cityId,
+            string city,
+            string postcode,
             string? nameEnGb);
 
         Task DeleteAsync(Guid placeId);
